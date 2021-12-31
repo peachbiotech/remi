@@ -7,9 +7,10 @@
 
 import Foundation
 
+// A SleepSession contains relevant user-facing sleep data for visualization
 struct SleepSession: Identifiable {
     var id: UUID
-    var sessionDate: Date            // Date at which sleep session begun
+    var sessionDate: Date     // Date at which sleep session begun
     var avgHeartRate: Int     // BPM
     var avgO2Sat: Int         // Percent O2 Sat.
     var sleepDuration: Int    // Minutes
