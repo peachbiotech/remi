@@ -16,6 +16,10 @@
 		B84801712746DBDE00B66439 /* RemyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84801702746DBDE00B66439 /* RemyTests.swift */; };
 		B848017B2746DBDE00B66439 /* RemyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017A2746DBDE00B66439 /* RemyUITests.swift */; };
 		B848017D2746DBDE00B66439 /* RemyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */; };
+		B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A42277EC8A400EA7A2A /* SleepSession.swift */; };
+		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
+		B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStage.swift */; };
+		B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,10 @@
 		B84801762746DBDE00B66439 /* RemyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848017A2746DBDE00B66439 /* RemyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITests.swift; sourceTree = "<group>"; };
 		B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B8D44A42277EC8A400EA7A2A /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
+		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
+		B8D44A46277ECA6700EA7A2A /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
+		B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramSegment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,8 @@
 		B84801592746DBDD00B66439 /* Remy */ = {
 			isa = PBXGroup;
 			children = (
+				B8D44A41277EC7A100EA7A2A /* Views */,
+				B8D44A40277EC78B00EA7A2A /* Models */,
 				B848015A2746DBDD00B66439 /* RemyApp.swift */,
 				B848015C2746DBDD00B66439 /* ContentView.swift */,
 				B848015E2746DBDE00B66439 /* Assets.xcassets */,
@@ -131,6 +141,24 @@
 				B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */,
 			);
 			path = RemyUITests;
+			sourceTree = "<group>";
+		};
+		B8D44A40277EC78B00EA7A2A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B8D44A42277EC8A400EA7A2A /* SleepSession.swift */,
+				B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */,
+				B8D44A46277ECA6700EA7A2A /* SleepStage.swift */,
+				B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B8D44A41277EC7A100EA7A2A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +292,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B84801642746DBDE00B66439 /* Persistence.swift in Sources */,
+				B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */,
+				B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */,
+				B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */,
+				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
 				B848015D2746DBDD00B66439 /* ContentView.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
 				B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */,
@@ -427,6 +459,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Remy/Preview Content\"";
+				DEVELOPMENT_TEAM = Y483XQUDGK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -455,6 +488,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Remy/Preview Content\"";
+				DEVELOPMENT_TEAM = Y483XQUDGK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
