@@ -9,7 +9,28 @@ import SwiftUI
 
 struct HeartRatePanel: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color.purple)
+                .frame(width: 170, height: 150)
+            VStack (alignment: .leading){
+                Text("Avg. Heart Rate").font(.headline).multilineTextAlignment(.leading).colorInvert()
+                Spacer()
+                HStack {
+                    Text("50 BPM").font(.title).colorInvert()
+                    Spacer()
+                    Image(systemName: "heart.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50.0, height: 50.0)
+                        .colorInvert()
+                }
+                .padding(.bottom, 20.0)
+            }
+            .padding(.all, 14.0)
+            .frame(width: 170, height: 150)
+            
+        }
     }
 }
 

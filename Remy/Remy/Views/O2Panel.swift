@@ -9,7 +9,28 @@ import SwiftUI
 
 struct O2Panel: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color.teal)
+                .frame(width: 170, height: 150)
+            VStack (alignment: .leading){
+                Text("Avg. O2\nSaturation").font(.headline).multilineTextAlignment(.leading).colorInvert()
+                Spacer()
+                HStack {
+                    Text("95%").font(.title).colorInvert()
+                    Spacer()
+                    Image(systemName: "lungs.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 55.0, height: 55.0)
+                        .colorInvert()
+                }
+                .padding(.bottom, 15.0)
+            }
+            .padding(.all, 14.0)
+            .frame(width: 170, height: 150)
+            
+        }
     }
 }
 

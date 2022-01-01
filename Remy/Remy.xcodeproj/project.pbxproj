@@ -20,7 +20,6 @@
 		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
 		B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStage.swift */; };
 		B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */; };
-		B8D44A4B277EE27700EA7A2A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A4A277EE27700EA7A2A /* CalendarView.swift */; };
 		B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */; };
 		B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */; };
 		B8D44A53277EE2BA00EA7A2A /* HypnogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */; };
@@ -30,6 +29,10 @@
 		B8D44A5B277EE3B500EA7A2A /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */; };
 		B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */; };
 		B8D44A5F277EE3DF00EA7A2A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */; };
+		B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */; };
+		B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */; };
+		B8D44A92277F9E4600EA7A2A /* SimpleChart in Frameworks */ = {isa = PBXBuildFile; productRef = B8D44A91277F9E4600EA7A2A /* SimpleChart */; };
+		B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +69,6 @@
 		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
 		B8D44A46277ECA6700EA7A2A /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
 		B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramSegment.swift; sourceTree = "<group>"; };
-		B8D44A4A277EE27700EA7A2A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2Panel.swift; sourceTree = "<group>"; };
 		B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRatePanel.swift; sourceTree = "<group>"; };
 		B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramView.swift; sourceTree = "<group>"; };
@@ -76,6 +78,9 @@
 		B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingView.swift; sourceTree = "<group>"; };
 		B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryPanel.swift; sourceTree = "<group>"; };
+		B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramPlot.swift; sourceTree = "<group>"; };
+		B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8D44A92277F9E4600EA7A2A /* SimpleChart in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +112,7 @@
 		B848014E2746DBDD00B66439 = {
 			isa = PBXGroup;
 			children = (
+				B8D44A62277F8FB600EA7A2A /* Packages */,
 				B84801592746DBDD00B66439 /* Remy */,
 				B848016F2746DBDE00B66439 /* RemyTests */,
 				B84801792746DBDE00B66439 /* RemyUITests */,
@@ -177,18 +184,27 @@
 		B8D44A41277EC7A100EA7A2A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B8D44A4A277EE27700EA7A2A /* CalendarView.swift */,
 				B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */,
 				B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */,
 				B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */,
+				B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */,
 				B8D44A54277EE32A00EA7A2A /* Toolbar.swift */,
 				B8D44A56277EE39A00EA7A2A /* TrendsView.swift */,
 				B8D44A58277EE3A300EA7A2A /* DailyView.swift */,
 				B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */,
 				B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */,
 				B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */,
+				B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */,
+				B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B8D44A62277F8FB600EA7A2A /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +223,9 @@
 			dependencies = (
 			);
 			name = Remy;
+			packageProductDependencies = (
+				B8D44A91277F9E4600EA7A2A /* SimpleChart */,
+			);
 			productName = Remy;
 			productReference = B84801572746DBDD00B66439 /* Remy.app */;
 			productType = "com.apple.product-type.application";
@@ -279,6 +298,9 @@
 				Base,
 			);
 			mainGroup = B848014E2746DBDD00B66439;
+			packageReferences = (
+				B8D44A90277F9E4600EA7A2A /* XCRemoteSwiftPackageReference "SimpleChart" */,
+			);
 			productRefGroup = B84801582746DBDD00B66439 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -330,14 +352,16 @@
 				B84801642746DBDE00B66439 /* Persistence.swift in Sources */,
 				B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */,
 				B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */,
+				B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */,
 				B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */,
 				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
-				B8D44A4B277EE27700EA7A2A /* CalendarView.swift in Sources */,
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
 				B848015D2746DBDD00B66439 /* ContentView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
+				B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */,
 				B8D44A53277EE2BA00EA7A2A /* HypnogramView.swift in Sources */,
+				B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */,
 				B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -681,6 +705,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B8D44A90277F9E4600EA7A2A /* XCRemoteSwiftPackageReference "SimpleChart" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:ImpostersLimited/SimpleChart.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B8D44A91277F9E4600EA7A2A /* SimpleChart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B8D44A90277F9E4600EA7A2A /* XCRemoteSwiftPackageReference "SimpleChart" */;
+			productName = SimpleChart;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B84801652746DBDE00B66439 /* Remy.xcdatamodeld */ = {
