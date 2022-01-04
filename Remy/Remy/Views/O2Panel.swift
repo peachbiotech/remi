@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct O2Panel: View {
+    var avgO2Sat: Int
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.teal)
+            Button(action: {}) {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.teal)
                 .frame(width: 170, height: 150)
+            }
             VStack (alignment: .leading){
                 Text("Avg. O2\nSaturation").font(.headline).multilineTextAlignment(.leading).colorInvert()
                 Spacer()
                 HStack {
-                    Text("95%").font(.title).colorInvert()
+                    Text("\(avgO2Sat)%").font(.title).colorInvert()
                     Spacer()
                     Image(systemName: "lungs.fill")
                         .resizable()
@@ -36,6 +40,6 @@ struct O2Panel: View {
 
 struct O2Panel_Previews: PreviewProvider {
     static var previews: some View {
-        O2Panel()
+        O2Panel(avgO2Sat: 98)
     }
 }

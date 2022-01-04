@@ -10,21 +10,22 @@ import SwiftUI
 struct DailyView: View {
     
     @State private var date = Date()
+    @Binding var sleepSession: SleepSession
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    DatePicker("Date", selection: $date, in: ...Date(), displayedComponents: .date)
+                    DatePicker("Date", selection: $sleepSession.sessionDate, in: ...Date(), displayedComponents: .date)
                         .padding(.vertical, 5.0)
                     SleepSummaryPanel()
                         .padding(.bottom, 5.0)
-                    HypnogramView(plot: HypnogramPlot())
+                    HypnogramView(hypnogram: sleepSession.hypnogram)
                         .padding(.bottom, 5.0)
                     HStack {
-                        HeartRatePanel()
+                        HeartRatePanel(avgHeartRate: sleepSession.avgHeartRate)
                         Spacer()
-                        O2Panel()
+                        O2Panel(avgO2Sat: sleepSession.avgO2Sat)
                     }
                     Spacer()
                 }
@@ -32,7 +33,7 @@ struct DailyView: View {
                 .navigationTitle("Sleep Summary")
                 .toolbar {
                     BottomToolbar()
-            }
+                }
             }
         }
     }
@@ -40,6 +41,6 @@ struct DailyView: View {
 
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
-        DailyView()
+        DailyView(sleepSession: .constant(SleepSession.sampleData[0]))
     }
 }

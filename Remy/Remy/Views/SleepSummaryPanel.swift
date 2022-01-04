@@ -10,9 +10,11 @@ import SwiftUI
 struct SleepSummaryPanel: View {
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.green)
-                .frame(maxWidth: .infinity, maxHeight: 150)
+            Button(action: {}) {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.green)
+                    .frame(maxWidth: .infinity, maxHeight: 150)
+            }
             VStack (alignment: .leading){
                 Text("Sleep Goal").font(.headline).multilineTextAlignment(.leading).colorInvert()
                 Spacer()

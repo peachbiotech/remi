@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct HypnogramView: View {
-    let plot: HypnogramPlot
+    var hypnogram: Hypnogram
+    
     var body: some View {
-        
         ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.black)
-                .frame(width: .infinity, height: 220)
+            Button(action: {}) {
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(Color.black)
+                .frame(maxWidth: .infinity, maxHeight: 220)
+            }
             VStack(alignment: .leading) {
                 Text("Hypnogram")
                     .font(.headline)
                     .colorInvert()
                 HStack {
-                    VStack{
+                    VStack(alignment: .leading){
                         Text("Awake").padding(3.2).font(.system(size: 12))
                             .colorInvert()
                         Text("NREM1").padding(3.2).font(.system(size: 12))
@@ -32,15 +34,17 @@ struct HypnogramView: View {
                         Text("REM").padding(3.2).font(.system(size: 12))
                             .colorInvert()
                     }
-                    plot
+                    Spacer()
+                    HypnogramPlot(hypnogram: hypnogram)
                 }
-            }.frame(width: .infinity, height: 220)
+            }.padding()
+            .frame(maxWidth: .infinity, maxHeight: 220)
         }
     }
 }
 
 struct HypnogramView_Previews: PreviewProvider {
     static var previews: some View {
-        HypnogramView(plot: HypnogramPlot())
+        HypnogramView(hypnogram: SleepSession.sampleData[0].hypnogram)
     }
 }

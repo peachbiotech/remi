@@ -13,8 +13,7 @@ struct RemyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            DailyView(sleepSession: .constant(SleepSession.sampleData[0]))
         }
     }
 }

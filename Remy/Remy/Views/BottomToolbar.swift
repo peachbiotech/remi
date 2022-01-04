@@ -24,8 +24,8 @@ struct BottomToolbar: ToolbarContent {
                 }
 
                 VStack {
-                    Image(systemName: "gear")
-                    Text("Settings")
+                    Image(systemName: "info.circle")
+                    Text("About")
                 }
             }
         }

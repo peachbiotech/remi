@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848015A2746DBDD00B66439 /* RemyApp.swift */; };
-		B848015D2746DBDD00B66439 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848015C2746DBDD00B66439 /* ContentView.swift */; };
 		B848015F2746DBDE00B66439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B848015E2746DBDE00B66439 /* Assets.xcassets */; };
 		B84801622746DBDE00B66439 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B84801612746DBDE00B66439 /* Preview Assets.xcassets */; };
 		B84801642746DBDE00B66439 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84801632746DBDE00B66439 /* Persistence.swift */; };
@@ -23,12 +22,11 @@
 		B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */; };
 		B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */; };
 		B8D44A53277EE2BA00EA7A2A /* HypnogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */; };
-		B8D44A55277EE32A00EA7A2A /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A54277EE32A00EA7A2A /* Toolbar.swift */; };
 		B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A56277EE39A00EA7A2A /* TrendsView.swift */; };
 		B8D44A59277EE3A300EA7A2A /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A58277EE3A300EA7A2A /* DailyView.swift */; };
 		B8D44A5B277EE3B500EA7A2A /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */; };
 		B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */; };
-		B8D44A5F277EE3DF00EA7A2A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */; };
+		B8D44A5F277EE3DF00EA7A2A /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A5E277EE3DF00EA7A2A /* AboutView.swift */; };
 		B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */; };
 		B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */; };
 		B8D44A92277F9E4600EA7A2A /* SimpleChart in Frameworks */ = {isa = PBXBuildFile; productRef = B8D44A91277F9E4600EA7A2A /* SimpleChart */; };
@@ -55,7 +53,6 @@
 /* Begin PBXFileReference section */
 		B84801572746DBDD00B66439 /* Remy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848015A2746DBDD00B66439 /* RemyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyApp.swift; sourceTree = "<group>"; };
-		B848015C2746DBDD00B66439 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B848015E2746DBDE00B66439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B84801612746DBDE00B66439 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B84801632746DBDE00B66439 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -72,12 +69,11 @@
 		B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2Panel.swift; sourceTree = "<group>"; };
 		B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRatePanel.swift; sourceTree = "<group>"; };
 		B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramView.swift; sourceTree = "<group>"; };
-		B8D44A54277EE32A00EA7A2A /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		B8D44A56277EE39A00EA7A2A /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		B8D44A58277EE3A300EA7A2A /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingView.swift; sourceTree = "<group>"; };
-		B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B8D44A5E277EE3DF00EA7A2A /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryPanel.swift; sourceTree = "<group>"; };
 		B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramPlot.swift; sourceTree = "<group>"; };
 		B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbar.swift; sourceTree = "<group>"; };
@@ -136,7 +132,6 @@
 				B8D44A41277EC7A100EA7A2A /* Views */,
 				B8D44A40277EC78B00EA7A2A /* Models */,
 				B848015A2746DBDD00B66439 /* RemyApp.swift */,
-				B848015C2746DBDD00B66439 /* ContentView.swift */,
 				B848015E2746DBDE00B66439 /* Assets.xcassets */,
 				B84801632746DBDE00B66439 /* Persistence.swift */,
 				B84801652746DBDE00B66439 /* Remy.xcdatamodeld */,
@@ -188,12 +183,11 @@
 				B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */,
 				B8D44A52277EE2BA00EA7A2A /* HypnogramView.swift */,
 				B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */,
-				B8D44A54277EE32A00EA7A2A /* Toolbar.swift */,
 				B8D44A56277EE39A00EA7A2A /* TrendsView.swift */,
 				B8D44A58277EE3A300EA7A2A /* DailyView.swift */,
 				B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */,
 				B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */,
-				B8D44A5E277EE3DF00EA7A2A /* SettingsView.swift */,
+				B8D44A5E277EE3DF00EA7A2A /* AboutView.swift */,
 				B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */,
 				B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */,
 			);
@@ -344,9 +338,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */,
-				B8D44A55277EE32A00EA7A2A /* Toolbar.swift in Sources */,
 				B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */,
-				B8D44A5F277EE3DF00EA7A2A /* SettingsView.swift in Sources */,
+				B8D44A5F277EE3DF00EA7A2A /* AboutView.swift in Sources */,
 				B8D44A5B277EE3B500EA7A2A /* WelcomeView.swift in Sources */,
 				B8D44A59277EE3A300EA7A2A /* DailyView.swift in Sources */,
 				B84801642746DBDE00B66439 /* Persistence.swift in Sources */,
@@ -356,7 +349,6 @@
 				B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */,
 				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
-				B848015D2746DBDD00B66439 /* ContentView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
 				B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */,

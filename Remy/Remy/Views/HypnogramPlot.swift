@@ -9,25 +9,40 @@ import SwiftUI
 import SimpleChart
 
 struct HypnogramPlot: View {
+    var hypnogram: Hypnogram
     var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
-    var body: some View {
-        let temp: [SCQuadCurveData] = [
-            SCQuadCurveData(5.0),
-            SCQuadCurveData(4.0),
-            SCQuadCurveData(3.0),
-            SCQuadCurveData(3.0),
-            SCQuadCurveData(3.0),
-            SCQuadCurveData(2.0),
-            SCQuadCurveData(2.0),
-            SCQuadCurveData(1.0),
-            SCQuadCurveData(1.0),
-            SCQuadCurveData(1.0),
-            SCQuadCurveData(2.0),
-            SCQuadCurveData(2.0),
-            SCQuadCurveData(5.0)
-        ]
+    
+    func hypnogram2Array(hypnogram: [HypnogramSegment]) -> [SCQuadCurveData] {
+        var hypnogramArray: [SCQuadCurveData] = []
         
-        SCQuadCurve(config: SCQuadCurveConfig(chartData: temp, showInterval: false, showXAxis: true, showYAxis: true, stroke: true, color: [.green]))
+        for segment in hypnogram {
+            var plot_y: Double
+            switch segment.stage {
+            case .WAKE:
+                plot_y = 5.0
+            case .NREM1:
+                plot_y = 4.0
+            case .NREM2:
+                plot_y = 3.0
+            case .NREM3:
+                plot_y = 2.0
+            case .REM:
+                plot_y = 1.0
+            }
+            
+            let delta_t = segment.end - segment.begin
+            
+            for _ in 0..<(delta_t) {
+                hypnogramArray.append(SCQuadCurveData(plot_y))
+            }
+        }
+        
+        return hypnogramArray
+    }
+    
+    var body: some View {
+        
+        SCQuadCurve(config: SCQuadCurveConfig(chartData: hypnogram2Array(hypnogram: hypnogram.segments), showInterval: false, showXAxis: false, showYAxis: true, stroke: true, color: [.green]))
             .frame(width: 260, height: 150)
     }
 }
@@ -35,6 +50,6 @@ struct HypnogramPlot: View {
 
 struct HypnogramPlot_Previews: PreviewProvider {
     static var previews: some View {
-        HypnogramPlot()
+        HypnogramPlot(hypnogram: SleepSession.sampleData[0].hypnogram)
     }
 }
