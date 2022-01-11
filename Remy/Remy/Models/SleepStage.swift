@@ -7,10 +7,11 @@
 
 import Foundation
 
-enum SleepStage {
+enum SleepStage: Codable {
     case WAKE
     case NREM1
     case NREM2
     case NREM3
     case REM
+    case END // For the last hypnogram segment
 }

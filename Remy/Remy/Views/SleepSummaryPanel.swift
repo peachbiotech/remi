@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct SleepSummaryPanel: View {
+    var sleepDuration: Int
+    var hours: Int {
+        sleepDuration / 60
+    }
+    var minutes: Int {
+        sleepDuration % 60
+    }
+    
     var body: some View {
         ZStack {
             Button(action: {}) {
@@ -19,7 +27,7 @@ struct SleepSummaryPanel: View {
                 Text("Sleep Goal").font(.headline).multilineTextAlignment(.leading).colorInvert()
                 Spacer()
                 HStack {
-                    Text("8h30m / 8h").font(.title).colorInvert()
+                    Text("\(hours)h\(minutes)m / 8h").font(.title).colorInvert()
                     Spacer()
                     Image(systemName: "bed.double.fill")
                         .resizable()
@@ -39,6 +47,6 @@ struct SleepSummaryPanel: View {
 
 struct SleepSummaryPanel_Previews: PreviewProvider {
     static var previews: some View {
-        SleepSummaryPanel()
+        SleepSummaryPanel(sleepDuration: 500)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  EEGStaging.swift
+//  Hypnogram.swift
 //  Remy
 //
 //  Created by Jia Chun Xie on 12/30/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Hypnogram: Identifiable {
+struct Hypnogram: Identifiable, Codable {
     var id: UUID
     var segments: [HypnogramSegment]
     
@@ -22,25 +22,28 @@ extension Hypnogram {
     [
         Hypnogram(segments: [
             HypnogramSegment(
-                stage: .WAKE, begin: 0, end: 10
+                stage: .WAKE, begin: 0
             ),
             HypnogramSegment(
-                stage: .NREM1, begin: 10, end: 20
+                stage: .NREM1, begin: 10
             ),
             HypnogramSegment(
-                stage: .NREM2, begin: 20, end: 30
+                stage: .NREM2, begin: 20
             ),
             HypnogramSegment(
-                stage: .NREM3, begin: 30, end: 40
+                stage: .NREM3, begin: 30
             ),
             HypnogramSegment(
-                stage: .REM, begin: 40, end: 50
+                stage: .REM, begin: 40
             ),
             HypnogramSegment(
-                stage: .NREM1, begin: 50, end: 60
+                stage: .NREM1, begin: 50
             ),
             HypnogramSegment(
-                stage: .WAKE, begin: 60, end: 70
+                stage: .WAKE, begin: 60
+            ),
+            HypnogramSegment(
+                stage: .END, begin: 65
             )
         ])
     ]

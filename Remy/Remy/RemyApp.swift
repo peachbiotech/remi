@@ -9,11 +9,20 @@ import SwiftUI
 
 @main
 struct RemyApp: App {
+    @StateObject private var store = SessionStore()
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            DailyView(sleepSession: .constant(SleepSession.sampleData[0]))
+            DailyView(sleepSessions: $store.sleepSessions) {
+                Task {
+                    do {
+                        try await SessionStore.save(sleepSessions: store.sleepSessions)
+                    } catch {
+                        fatalError("Error saving sessions")
+                    }
+                }
+            }
         }
     }
 }

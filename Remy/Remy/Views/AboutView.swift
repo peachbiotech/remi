@@ -24,7 +24,11 @@ struct AboutView: View {
                         Label("Placeholder 3", systemImage: "paintpalette")
                     }
                 }
-            }.navigationTitle("About")
+            }
+            .navigationTitle("About")
+            .toolbar {
+                BottomToolbar()
+            }
         }
     }
 }

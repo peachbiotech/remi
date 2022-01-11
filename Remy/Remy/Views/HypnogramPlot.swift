@@ -15,7 +15,10 @@ struct HypnogramPlot: View {
     func hypnogram2Array(hypnogram: [HypnogramSegment]) -> [SCQuadCurveData] {
         var hypnogramArray: [SCQuadCurveData] = []
         
-        for segment in hypnogram {
+        for (index, segment) in hypnogram.enumerated() {
+            if index == hypnogram.count - 1 {
+                break
+            }
             var plot_y: Double
             switch segment.stage {
             case .WAKE:
@@ -28,9 +31,10 @@ struct HypnogramPlot: View {
                 plot_y = 2.0
             case .REM:
                 plot_y = 1.0
+            case .END:
+                plot_y = 0.0
             }
-            
-            let delta_t = segment.end - segment.begin
+            let delta_t = hypnogram[index+1].begin - segment.begin
             
             for _ in 0..<(delta_t) {
                 hypnogramArray.append(SCQuadCurveData(plot_y))
