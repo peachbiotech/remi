@@ -1,48 +1,48 @@
 [
     {
-        "time": "1640229780",
+        "time": 1640229780,
         "heartRate": 60, 
         "o2Sat": 98,
         "sleepStage": "NREM1"
     },
     {
-        "time": "1640233380",
+        "time": 1640233380,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "NREM2"
     },
     {
-        "time": "1640236980",
+        "time": 1640236980,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "NREM3"
     },
     {
-        "time": "1640240580",
+        "time": 1640240580,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "NREM3"
     },
     {
-        "time": "1640244180",
+        "time": 1640244180,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "NREM3"
     },
     {
-        "time": "1640247780",
+        "time": 1640247780,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "NREM2"   
     },
     {
-        "time": "1640251380",
+        "time": 1640251380,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "REM"
     },
     {
-        "time": "1640254980",
+        "time": 1640254980,
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": "REM"

@@ -13,11 +13,13 @@ class SessionStore: ObservableObject {
     @Published var sleepSessions: [String: SleepSession] = [:]
     
     func load() async {
-        let url = URL(string: "SampleSleepSession.json")!
+        let url = URL(string: "https://raw.githubusercontent.com/peachbiotech/remy/main/Remy/Remy/SampleSleepSession.json")!
         let urlSession = URLSession.shared
         do {
             let (data, _) = try await urlSession.data(from: url)
-            let session = try JSONDecoder().decode([SleepSnapShot].self, from: data)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            let session = try decoder.decode([SleepSnapShot].self, from: data)
             let sleepSession = SleepSession(session: session)
             
             let calendar = Calendar.current
