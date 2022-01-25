@@ -10,37 +10,66 @@ import SwiftUI
 struct DailyView: View {
     
     @State private var date = Date()
-    @Binding var sleepSessions: [Date: SleepSession]
+    @StateObject var sessionStore = SessionStore()
+    let saveAction: ()->Void
+    
+    var day: String {
+        let dateFormatter = DateFormatter()
+        print(date)
+        dateFormatter.dateFormat = "yyyy"
+        let yearString = dateFormatter.string(from: date)
+        
+        dateFormatter.dateFormat = "MM"
+        let monthString = dateFormatter.string(from: date)
+        
+        dateFormatter.dateFormat = "dd"
+        let dayString = dateFormatter.string(from: date)
+        
+        return yearString + "/" + monthString + "/" + dayString
+    }
+    
+    var currentSession: SleepSession {
+        get {
+            let session: SleepSession = sessionStore.sleepSessions[day] ?? SleepSession(time: Date())
+            return session
+        }
+    }
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    DatePicker("Date", selection: $date, in: ...Date(), displayedComponents: .date)
-                        .padding(.vertical, 5.0)
-                    SleepSummaryPanel(sleepDuration: sleepSessions[date]!.sleepDuration)
-                        .padding(.bottom, 5.0)
-                    HypnogramView(hypnogram: sleepSessions[date]!.hypnogram)
-                        .padding(.bottom, 5.0)
-                    HStack {
-                        HeartRatePanel(avgHeartRate: sleepSessions[date]!.avgHeartRate)
-                        Spacer()
-                        O2Panel(avgO2Sat: sleepSessions[date]!.avgO2Sat)
-                    }
+        ScrollView {
+            VStack {
+                DatePicker("Date", selection: $date, in: ...Date(), displayedComponents: .date)
+                    .padding(.vertical, 5.0)
+                SleepSummaryPanel(sleepDuration: currentSession.sleepDuration)
+                    .padding(.bottom, 5.0)
+                HypnogramView(hypnogram: currentSession.hypnogram)
+                    .padding(.bottom, 5.0)
+                HStack {
+                    HeartRatePanel(avgHeartRate: currentSession.avgHeartRate)
                     Spacer()
+                    O2Panel(avgO2Sat: currentSession.avgO2Sat)
                 }
-                .padding()
-                .navigationTitle("Sleep Summary")
-                .toolbar {
-                    BottomToolbar()
-                }
+                Spacer()
             }
+            .padding()
+            .navigationTitle("Sleep Summary")
+            .toolbar {
+                BottomToolbar()
+            }
+        }
+        .task {
+            await self.sessionStore.load()
+        }
+        .refreshable {
+            await self.sessionStore.load()
         }
     }
 }
 
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
-        DailyView(sleepSessions: .constant([Date(): SleepSession.sampleData[0]]))
+        Group {
+            DailyView(saveAction: {})
+        }
     }
 }

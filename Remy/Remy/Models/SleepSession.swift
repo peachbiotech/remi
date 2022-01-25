@@ -1,5 +1,5 @@
 //
-//  SleepData.swift
+//  SleepSession.swift
 //  Remy
 //
 //  Created by Jia Chun Xie on 12/30/21.
@@ -8,61 +8,66 @@
 import Foundation
 
 // A SleepSession contains relevant user-facing sleep data for visualization
-struct SleepSession: Identifiable, Codable {
-    var id: UUID
-    var sessionDate: Date     // Date at which sleep session begun
-    var heartRates: [Int: Int] // Store heart rates and O2 saturation in dict
-    var o2Sats: [Int: Int]     // Key: Offset from start in minutes
-    var sleepDuration: Int    // Minutes
-    var hypnogram: Hypnogram
+struct SleepSession: Codable {
+    var session: [SleepSnapShot]
+    
+    var hypnogram: Hypnogram {
+        get {
+            var segments: [HypnogramSegment] = []
+            let t0 = session[0].time
+            for snapShot in session {
+                let dt = SleepSession.timeDifferenceMins(startTime: t0, endTime: snapShot.time)
+                let segment = HypnogramSegment(stage: snapShot.sleepStage, begin: dt)
+                segments.append(segment)
+            }
+            return Hypnogram(segments: segments)
+        }
+    }
+    
+    var sleepDuration: Int {
+        get {
+            let startTime = session[0].time
+            let endTime = session.last!.time
+            return SleepSession.timeDifferenceMins(startTime: startTime, endTime: endTime)
+        }
+    }
     
     var avgHeartRate: Int {
         get {
             var sum = 0
-            for (_, heartRate) in heartRates {
-                sum += heartRate
+            for snapShot in session {
+                sum += snapShot.heartRate
             }
-            return Int(sum / heartRates.count)
+            return Int(sum / session.count)
         }
     }
     
     var avgO2Sat: Int {
         get {
             var sum = 0
-            for (_, o2Sat) in o2Sats {
-                sum += o2Sat
+            for snapShot in session {
+                sum += snapShot.o2Sat
             }
-            return Int(sum / o2Sats.count)
+            return Int(sum / session.count)
         }
     }
     
-    init(id: UUID = UUID(), sessionDate: Date, heartRates: [Int: Int], o2Sats: [Int: Int], sleepDuration: Int, hypnogram: Hypnogram) {
-        self.id = id
-        self.sessionDate = sessionDate
-        self.heartRates = heartRates
-        self.o2Sats = o2Sats
-        self.sleepDuration = sleepDuration
-        self.hypnogram = hypnogram
+    private static func timeDifferenceMins(startTime: Date, endTime: Date) -> Int {
+        let calendar = Calendar.current
+        
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: startTime)
+        let nowComponents = calendar.dateComponents([.hour, .minute], from: endTime)
+        let difference = calendar.dateComponents([.minute], from: timeComponents, to: nowComponents).minute!
+        
+        return difference
     }
     
-    init(id: UUID = UUID(), sessionDate: String, heartRates: [Int: Int], o2Sats: [Int: Int],  sleepDuration: Int, hypnogram: Hypnogram) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let date = formatter.date(from: sessionDate)
-        
-        self.id = id
-        self.sessionDate = date!
-        self.heartRates = heartRates
-        self.o2Sats = o2Sats
-        self.sleepDuration = sleepDuration
-        self.hypnogram = hypnogram
+    init(time: Date) {
+        self.session = [SleepSnapShot(time: time, heartRate: 0, o2Sat: 0, sleepStage: SleepStage.REM),
+                        SleepSnapShot(time: time + 1*60, heartRate: 0, o2Sat: 0, sleepStage: SleepStage.REM)]
     }
-}
-
-extension SleepSession {
-
-    static let sampleData: [SleepSession] =
-    [
-        SleepSession(sessionDate: "2021/12/22 22:22", heartRates: [0:60], o2Sats: [0:98], sleepDuration: 500, hypnogram: Hypnogram.sampleData[0])
-    ]
+    
+    init(session: [SleepSnapShot]) {
+        self.session = session
+    }
 }

@@ -43,8 +43,3 @@ struct HypnogramView: View {
     }
 }
 
-struct HypnogramView_Previews: PreviewProvider {
-    static var previews: some View {
-        HypnogramView(hypnogram: SleepSession.sampleData[0].hypnogram)
-    }
-}

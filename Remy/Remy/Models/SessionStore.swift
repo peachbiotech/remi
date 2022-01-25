@@ -8,80 +8,28 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 class SessionStore: ObservableObject {
-    @Published var sleepSessions: [Date: SleepSession] = [:]
+    @Published var sleepSessions: [String: SleepSession] = [:]
     
-    private static func fileURL() throws -> URL {
-        try FileManager.default.url(for: .documentDirectory,
-                                       in: .userDomainMask,
-                                       appropriateFor: nil,
-                                       create: false)
-            .appendingPathComponent("sessions.data")
-    }
-    
-    static func load() async throws -> [Date: SleepSession] {
-        try await withCheckedThrowingContinuation { continuation in
-            load { result in
-                switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                case .success(let sessions):
-                    continuation.resume(returning: sessions)
-                }
-            }
+    func load() async {
+        let url = URL(string: "SampleSleepSession.json")!
+        let urlSession = URLSession.shared
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            let session = try JSONDecoder().decode([SleepSnapShot].self, from: data)
+            let sleepSession = SleepSession(session: session)
+            
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.day], from: sleepSession.session[0].time)
+            let dayKey = String(components.day!)
+            
+            sleepSessions[dayKey] = sleepSession
         }
-    }
-    
-    static func load(completion: @escaping (Result<[Date: SleepSession], Error>)->Void) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let fileURL = try fileURL()
-                guard let file = try? FileHandle(forReadingFrom: fileURL) else {
-                    DispatchQueue.main.async {
-                        completion(.success([:]))
-                    }
-                    return
-                }
-                let sleepSessions = try JSONDecoder().decode([Date: SleepSession].self, from: file.availableData)
-                DispatchQueue.main.async {
-                    completion(.success(sleepSessions))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    @discardableResult
-    static func save(sleepSessions: [Date: SleepSession]) async throws -> Int {
-        try await withCheckedThrowingContinuation { continuation in
-            save(sleepSessions: sleepSessions) { result in
-                switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                case .success(let sessionSaved):
-                    continuation.resume(returning: sessionSaved)
-                }
-            }
-        }
-    }
-    
-    static func save(sleepSessions: [Date: SleepSession], completion: @escaping (Result<Int, Error>)->Void) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let data = try JSONEncoder().encode(sleepSessions)
-                let outfile = try fileURL()
-                try data.write(to: outfile)
-                DispatchQueue.main.async {
-                    completion(.success(sleepSessions.count))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
+        catch {
+            // Error handling in case the data couldn't be loaded
+            // For now, only display the error on the console
+            debugPrint("Error loading \(url): \(String(describing: error))")
         }
     }
 }

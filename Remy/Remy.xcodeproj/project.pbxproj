@@ -15,7 +15,9 @@
 		B84801712746DBDE00B66439 /* RemyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84801702746DBDE00B66439 /* RemyTests.swift */; };
 		B848017B2746DBDE00B66439 /* RemyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017A2746DBDE00B66439 /* RemyUITests.swift */; };
 		B848017D2746DBDE00B66439 /* RemyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */; };
+		B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8481B2727A06A280024683C /* SleepSnapShot.swift */; };
 		B8731675278CAADF00163E33 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8731674278CAADF00163E33 /* SessionStore.swift */; };
+		B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C603C4279EEC6800F0869D /* BLEManager.swift */; };
 		B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A42277EC8A400EA7A2A /* SleepSession.swift */; };
 		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
 		B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStage.swift */; };
@@ -32,6 +34,8 @@
 		B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */; };
 		B8D44A92277F9E4600EA7A2A /* SimpleChart in Frameworks */ = {isa = PBXBuildFile; productRef = B8D44A91277F9E4600EA7A2A /* SimpleChart */; };
 		B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */; };
+		B8FD0B31278DB42D001EE039 /* SampleSleepSession.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */; };
+		B8FD0B33278DF2F0001EE039 /* Vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD0B32278DF2F0001EE039 /* Vitals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +67,9 @@
 		B84801762746DBDE00B66439 /* RemyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848017A2746DBDE00B66439 /* RemyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITests.swift; sourceTree = "<group>"; };
 		B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B8481B2727A06A280024683C /* SleepSnapShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSnapShot.swift; sourceTree = "<group>"; };
 		B8731674278CAADF00163E33 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		B8C603C4279EEC6800F0869D /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		B8D44A42277EC8A400EA7A2A /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
 		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
 		B8D44A46277ECA6700EA7A2A /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
@@ -79,6 +85,8 @@
 		B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryPanel.swift; sourceTree = "<group>"; };
 		B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramPlot.swift; sourceTree = "<group>"; };
 		B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbar.swift; sourceTree = "<group>"; };
+		B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleSleepSession.json; sourceTree = "<group>"; };
+		B8FD0B32278DF2F0001EE039 /* Vitals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vitals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +142,7 @@
 				B8D44A41277EC7A100EA7A2A /* Views */,
 				B8D44A40277EC78B00EA7A2A /* Models */,
 				B848015A2746DBDD00B66439 /* RemyApp.swift */,
+				B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */,
 				B848015E2746DBDE00B66439 /* Assets.xcassets */,
 				B84801632746DBDE00B66439 /* Persistence.swift */,
 				B84801652746DBDE00B66439 /* Remy.xcdatamodeld */,
@@ -175,6 +184,9 @@
 				B8D44A46277ECA6700EA7A2A /* SleepStage.swift */,
 				B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */,
 				B8731674278CAADF00163E33 /* SessionStore.swift */,
+				B8FD0B32278DF2F0001EE039 /* Vitals.swift */,
+				B8481B2727A06A280024683C /* SleepSnapShot.swift */,
+				B8C603C4279EEC6800F0869D /* BLEManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8FD0B31278DB42D001EE039 /* SampleSleepSession.json in Resources */,
 				B84801622746DBDE00B66439 /* Preview Assets.xcassets in Resources */,
 				B848015F2746DBDE00B66439 /* Assets.xcassets in Resources */,
 			);
@@ -346,6 +359,7 @@
 				B8D44A5B277EE3B500EA7A2A /* WelcomeView.swift in Sources */,
 				B8D44A59277EE3A300EA7A2A /* DailyView.swift in Sources */,
 				B84801642746DBDE00B66439 /* Persistence.swift in Sources */,
+				B8FD0B33278DF2F0001EE039 /* Vitals.swift in Sources */,
 				B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */,
 				B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */,
 				B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */,
@@ -354,7 +368,9 @@
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
+				B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */,
 				B8731675278CAADF00163E33 /* SessionStore.swift in Sources */,
+				B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */,
 				B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */,
 				B8D44A53277EE2BA00EA7A2A /* HypnogramView.swift in Sources */,
 				B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */,

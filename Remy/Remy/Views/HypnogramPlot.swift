@@ -50,10 +50,3 @@ struct HypnogramPlot: View {
             .frame(width: 260, height: 150)
     }
 }
-
-
-struct HypnogramPlot_Previews: PreviewProvider {
-    static var previews: some View {
-        HypnogramPlot(hypnogram: SleepSession.sampleData[0].hypnogram)
-    }
-}

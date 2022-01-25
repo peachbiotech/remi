@@ -7,13 +7,11 @@
 
 import Foundation
 
-struct HypnogramSegment: Identifiable, Codable {
-    var id: UUID
+struct HypnogramSegment: Codable {
     var stage: SleepStage
     var begin: Int // Segment start, offset from sleep onset (mins)
     
-    init(id: UUID=UUID(), stage: SleepStage, begin: Int) {
-        self.id = id
+    init(stage: SleepStage, begin: Int) {
         self.stage = stage
         self.begin = begin
     }

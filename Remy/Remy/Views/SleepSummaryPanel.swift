@@ -13,7 +13,21 @@ struct SleepSummaryPanel: View {
         sleepDuration / 60
     }
     var minutes: Int {
-        sleepDuration % 60
+        if sleepDuration >= 1*60 {
+            return sleepDuration % 60
+        }
+        else {
+            return 0
+        }
+    }
+    var summaryMsg: String {
+        if sleepDuration > 8*60 {
+            return "Congrats! You met your sleep goal!"
+        }
+        else if sleepDuration < 1*60 {
+            return "Insufficient sleep data"
+        }
+        return ""
     }
     
     var body: some View {
@@ -35,7 +49,7 @@ struct SleepSummaryPanel: View {
                         .frame(width: 50.0, height: 50.0)
                         .colorInvert()
                 }
-                Text("Congrats! You met your sleep goal!").colorInvert()
+                Text(summaryMsg).colorInvert()
                 .padding(.bottom, 10.0)
             }
             .padding(.all, 14.0)

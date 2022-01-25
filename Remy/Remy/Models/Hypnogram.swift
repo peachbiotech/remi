@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct Hypnogram: Identifiable, Codable {
-    var id: UUID
+struct Hypnogram: Codable {
     var segments: [HypnogramSegment]
     
-    init(id: UUID = UUID(), segments: [HypnogramSegment]) {
-        self.id = id
+    init(segments: [HypnogramSegment]) {
         self.segments = segments
     }
 }
