@@ -11,9 +11,9 @@ struct SleepSnapShot: Codable {
     var time: Date
     var heartRate: Int
     var o2Sat: Int
-    var sleepStage: SleepStage
+    var sleepStage: SleepStageType
     
-    init(time: Date, heartRate: Int, o2Sat: Int, sleepStage: SleepStage) {
+    init(time: Date, heartRate: Int, o2Sat: Int, sleepStage: SleepStageType) {
         self.time = time
         self.heartRate = heartRate
         self.o2Sat = o2Sat
