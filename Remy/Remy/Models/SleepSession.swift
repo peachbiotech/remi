@@ -17,6 +17,7 @@ struct SleepSession: Codable {
             let t0 = session[0].time
             for snapShot in session {
                 let dt = SleepSession.timeDifferenceMins(startTime: t0, endTime: snapShot.time)
+                print("\(dt)")
                 let segment = HypnogramSegment(stage: snapShot.sleepStage, begin: dt)
                 segments.append(segment)
             }
@@ -53,18 +54,16 @@ struct SleepSession: Codable {
     }
     
     private static func timeDifferenceMins(startTime: Date, endTime: Date) -> Int {
-        let calendar = Calendar.current
-        
-        let timeComponents = calendar.dateComponents([.hour, .minute], from: startTime)
-        let nowComponents = calendar.dateComponents([.hour, .minute], from: endTime)
-        let difference = calendar.dateComponents([.minute], from: timeComponents, to: nowComponents).minute!
-        
-        return difference
+        let startInMinutes = startTime.timeIntervalSince1970 / 60.0
+        let endInMinutes = endTime.timeIntervalSince1970 / 60.0
+        print("start: \(startInMinutes)")
+        print("end: \(endInMinutes)")
+        return Int(endInMinutes - startInMinutes)
     }
     
-    init(time: Date) {
-        self.session = [SleepSnapShot(time: time, heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM),
-                        SleepSnapShot(time: time + 1*60, heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM)]
+    init() {
+        self.session = [SleepSnapShot(time: Date(), heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM),
+                        SleepSnapShot(time: Date() + 1*60, heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM)]
     }
     
     init(session: [SleepSnapShot]) {

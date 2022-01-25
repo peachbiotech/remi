@@ -10,7 +10,6 @@ import SimpleChart
 
 struct HypnogramPlot: View {
     var hypnogram: Hypnogram
-    var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
     
     func hypnogram2Array(hypnogram: [HypnogramSegment]) -> [SCQuadCurveData] {
         var hypnogramArray: [SCQuadCurveData] = []
