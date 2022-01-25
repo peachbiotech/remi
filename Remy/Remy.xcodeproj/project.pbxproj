@@ -20,7 +20,7 @@
 		B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C603C4279EEC6800F0869D /* BLEManager.swift */; };
 		B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A42277EC8A400EA7A2A /* SleepSession.swift */; };
 		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
-		B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStage.swift */; };
+		B8D44A47277ECA6700EA7A2A /* SleepStageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */; };
 		B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */; };
 		B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */; };
 		B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */; };
@@ -72,7 +72,7 @@
 		B8C603C4279EEC6800F0869D /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		B8D44A42277EC8A400EA7A2A /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
 		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
-		B8D44A46277ECA6700EA7A2A /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
+		B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStageType.swift; sourceTree = "<group>"; };
 		B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramSegment.swift; sourceTree = "<group>"; };
 		B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2Panel.swift; sourceTree = "<group>"; };
 		B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRatePanel.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 			children = (
 				B8D44A42277EC8A400EA7A2A /* SleepSession.swift */,
 				B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */,
-				B8D44A46277ECA6700EA7A2A /* SleepStage.swift */,
+				B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */,
 				B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */,
 				B8731674278CAADF00163E33 /* SessionStore.swift */,
 				B8FD0B32278DF2F0001EE039 /* Vitals.swift */,
@@ -363,7 +363,7 @@
 				B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */,
 				B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */,
 				B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */,
-				B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */,
+				B8D44A47277ECA6700EA7A2A /* SleepStageType.swift in Sources */,
 				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,

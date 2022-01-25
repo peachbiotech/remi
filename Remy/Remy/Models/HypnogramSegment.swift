@@ -8,10 +8,10 @@
 import Foundation
 
 struct HypnogramSegment: Codable {
-    var stage: SleepStage
+    var stage: SleepStageType
     var begin: Int // Segment start, offset from sleep onset (mins)
     
-    init(stage: SleepStage, begin: Int) {
+    init(stage: SleepStageType, begin: Int) {
         self.stage = stage
         self.begin = begin
     }
