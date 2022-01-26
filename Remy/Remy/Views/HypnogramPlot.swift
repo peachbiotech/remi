@@ -45,7 +45,7 @@ struct HypnogramPlot: View {
     
     var body: some View {
         
-        SCQuadCurve(config: SCQuadCurveConfig(chartData: hypnogram2Array(hypnogram: hypnogram.segments), showInterval: false, showXAxis: false, showYAxis: true, stroke: true, color: [.green]))
+        SCQuadCurve(config: SCQuadCurveConfig(chartData: hypnogram2Array(hypnogram: hypnogram.segments), showInterval: false, showXAxis: false, showYAxis: true, stroke: true, color: [.green], minLower: 1.0, maxUpper: 5.0))
             .frame(width: 260, height: 140)
     }
 }

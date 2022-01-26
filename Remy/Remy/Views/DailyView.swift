@@ -59,7 +59,7 @@ struct DailyView: View {
                     Spacer()
                 }
                 else {
-                    Text("No sleep data available for current date").padding(.top, 10.0)
+                    Text("No sleep data available for current date" + " 😪").padding(.top, 10.0)
                 }
             }
             .padding()

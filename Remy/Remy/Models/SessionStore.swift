@@ -13,7 +13,7 @@ class SessionStore: ObservableObject {
     @Published var sleepSessions: [String: SleepSession] = [:]
     
     func load() async {
-        let url = URL(string: "https://raw.githubusercontent.com/peachbiotech/remy/devel/Remy/Remy/SampleSleepSession.json")!
+        let url = URL(string: "https://dl.dropbox.com/s/tkxiv4dbstniqld/SampleSleepSession.json?dl=1")!
         let urlSession = URLSession.shared
         do {
             let (data, _) = try await urlSession.data(from: url)
