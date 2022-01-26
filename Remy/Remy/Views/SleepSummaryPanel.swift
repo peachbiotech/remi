@@ -34,22 +34,22 @@ struct SleepSummaryPanel: View {
         ZStack {
             Button(action: {}) {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color.green)
+                    .fill(ColorManager.sleepSummaryPanelColor)
                     .frame(maxWidth: .infinity, maxHeight: 150)
             }
             VStack (alignment: .leading){
-                Text("Sleep Goal").font(.headline).multilineTextAlignment(.leading).colorInvert()
+                Text("Sleep Goal").font(.headline).multilineTextAlignment(.leading).foregroundColor(ColorManager.dashboardTextColor)
                 Spacer()
                 HStack {
-                    Text("\(hours)h\(minutes)m / 8h").font(.title).colorInvert()
+                    Text("\(hours)h\(minutes)m / 8h").font(.title).foregroundColor(ColorManager.dashboardTextColor)
                     Spacer()
                     Image(systemName: "bed.double.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50.0, height: 50.0)
-                        .colorInvert()
+                        .foregroundColor(ColorManager.dashboardTextColor)
                 }
-                Text(summaryMsg).colorInvert()
+                Text(summaryMsg).foregroundColor(ColorManager.dashboardTextColor)
                 .padding(.bottom, 10.0)
             }
             .padding(.all, 14.0)

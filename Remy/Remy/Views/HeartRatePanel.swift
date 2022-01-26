@@ -14,20 +14,20 @@ struct HeartRatePanel: View {
         ZStack {
             Button(action: {}) {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color.purple)
+                    .fill(ColorManager.heartRatePanelColor)
                 .frame(maxWidth: .infinity, maxHeight: 150)
             }
             VStack (alignment: .leading){
-                Text("Avg. Heart Rate").font(.headline).multilineTextAlignment(.leading).colorInvert()
+                Text("Avg. Heart Rate").font(.headline).multilineTextAlignment(.leading).foregroundColor(ColorManager.dashboardTextColor)
                 Spacer()
                 HStack {
-                    Text("\(avgHeartRate) BPM").font(.title).colorInvert()
+                    Text("\(avgHeartRate) BPM").font(.title).foregroundColor(ColorManager.dashboardTextColor)
                     Spacer()
                     Image(systemName: "heart.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50.0, height: 50.0)
-                        .colorInvert()
+                        .foregroundColor(ColorManager.dashboardTextColor)
                 }
                 .padding(.bottom, 20.0)
             }

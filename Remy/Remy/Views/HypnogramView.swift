@@ -14,25 +14,25 @@ struct HypnogramView: View {
         ZStack {
             Button(action: {}) {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Color.black)
+                    .fill(ColorManager.hypnogramPanelColor)
                 .frame(maxWidth: .infinity, maxHeight: 220)
             }
             VStack(alignment: .leading) {
                 Text("Hypnogram")
                     .font(.headline)
-                    .colorInvert()
+                    .foregroundColor(ColorManager.dashboardTextColor)
                 HStack {
                     VStack(alignment: .leading){
                         Text("Awake").padding(3.2).font(.system(size: 12))
-                            .colorInvert()
+                            .foregroundColor(ColorManager.dashboardTextColor)
                         Text("NREM1").padding(3.2).font(.system(size: 12))
-                            .colorInvert()
+                            .foregroundColor(ColorManager.dashboardTextColor)
                         Text("NREM2").padding(3.2).font(.system(size: 12))
-                            .colorInvert()
+                            .foregroundColor(ColorManager.dashboardTextColor)
                         Text("NREM3").padding(3.2).font(.system(size: 12))
-                            .colorInvert()
+                            .foregroundColor(ColorManager.dashboardTextColor)
                         Text("REM").padding(3.2).font(.system(size: 12))
-                            .colorInvert()
+                            .foregroundColor(ColorManager.dashboardTextColor)
                     }
                     Spacer()
                     HypnogramPlot(hypnogram: hypnogram)

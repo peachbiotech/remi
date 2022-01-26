@@ -10,24 +10,23 @@ import SwiftUI
 struct BottomToolbar: ToolbarContent {
     var body: some ToolbarContent {
 
-        ToolbarItem(placement: .bottomBar) {
+        ToolbarItemGroup(placement: .bottomBar) {
 
-            HStack(spacing: 75) {
-                VStack {
-                    Image(systemName: "bed.double.fill")
-                    Text("Summary")
-                }
-
-                VStack {
-                    Image(systemName: "chart.xyaxis.line")
-                    Text("Trends")
-                }
-
-                VStack {
-                    Image(systemName: "info.circle")
-                    Text("About")
-                }
+            VStack {
+                Image(systemName: "bed.double.fill")
+                Text("Summary")
+            }
+            Spacer()
+            VStack {
+                Image(systemName: "chart.xyaxis.line")
+                Text("Trends")
+            }
+            Spacer()
+            VStack {
+                Image(systemName: "info.circle")
+                Text("About")
             }
         }
     }
 }
+
