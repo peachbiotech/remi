@@ -15,10 +15,14 @@ struct SleepSession: Codable {
         get {
             var segments: [HypnogramSegment] = []
             let t0 = session[0].time
-            for snapShot in session {
+            
+            for (i, snapShot) in session.enumerated() {
                 let dt = SleepSession.timeDifferenceMins(startTime: t0, endTime: snapShot.time)
                 print("\(dt)")
                 let segment = HypnogramSegment(stage: snapShot.sleepStage, begin: dt)
+                if (i == session.count-1) {
+                    assert(snapShot.sleepStage == SleepStageType.END, "Hypnogram should end with END")
+                }
                 segments.append(segment)
             }
             return Hypnogram(segments: segments)

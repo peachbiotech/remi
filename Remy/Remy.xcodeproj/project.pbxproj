@@ -17,6 +17,8 @@
 		B848017D2746DBDE00B66439 /* RemyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */; };
 		B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8481B2727A06A280024683C /* SleepSnapShot.swift */; };
 		B8731675278CAADF00163E33 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8731674278CAADF00163E33 /* SessionStore.swift */; };
+		B887458B27A0D8D300032DC3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B887458A27A0D8D300032DC3 /* Colors.xcassets */; };
+		B887458D27A0DA8E00032DC3 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B887458C27A0DA8E00032DC3 /* ColorManager.swift */; };
 		B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C603C4279EEC6800F0869D /* BLEManager.swift */; };
 		B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A42277EC8A400EA7A2A /* SleepSession.swift */; };
 		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
@@ -69,6 +71,9 @@
 		B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B8481B2727A06A280024683C /* SleepSnapShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSnapShot.swift; sourceTree = "<group>"; };
 		B8731674278CAADF00163E33 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		B887458A27A0D8D300032DC3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		B887458C27A0DA8E00032DC3 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		B887458E27A0F49000032DC3 /* SimpleChart */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SimpleChart; path = ../../SimpleChart; sourceTree = "<group>"; };
 		B8C603C4279EEC6800F0869D /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		B8D44A42277EC8A400EA7A2A /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
 		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 		B848014E2746DBDD00B66439 = {
 			isa = PBXGroup;
 			children = (
+				B887458E27A0F49000032DC3 /* SimpleChart */,
 				B8D44A62277F8FB600EA7A2A /* Packages */,
 				B84801592746DBDD00B66439 /* Remy */,
 				B848016F2746DBDE00B66439 /* RemyTests */,
@@ -143,6 +149,7 @@
 				B8D44A40277EC78B00EA7A2A /* Models */,
 				B848015A2746DBDD00B66439 /* RemyApp.swift */,
 				B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */,
+				B887458A27A0D8D300032DC3 /* Colors.xcassets */,
 				B848015E2746DBDE00B66439 /* Assets.xcassets */,
 				B84801632746DBDE00B66439 /* Persistence.swift */,
 				B84801652746DBDE00B66439 /* Remy.xcdatamodeld */,
@@ -187,6 +194,7 @@
 				B8FD0B32278DF2F0001EE039 /* Vitals.swift */,
 				B8481B2727A06A280024683C /* SleepSnapShot.swift */,
 				B8C603C4279EEC6800F0869D /* BLEManager.swift */,
+				B887458C27A0DA8E00032DC3 /* ColorManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -327,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8FD0B31278DB42D001EE039 /* SampleSleepSession.json in Resources */,
+				B887458B27A0D8D300032DC3 /* Colors.xcassets in Resources */,
 				B84801622746DBDE00B66439 /* Preview Assets.xcassets in Resources */,
 				B848015F2746DBDE00B66439 /* Assets.xcassets in Resources */,
 			);
@@ -367,6 +376,7 @@
 				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,
+				B887458D27A0DA8E00032DC3 /* ColorManager.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
 				B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */,
 				B8731675278CAADF00163E33 /* SessionStore.swift in Sources */,
@@ -542,7 +552,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -573,7 +583,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -31,7 +31,7 @@ struct HypnogramPlot: View {
             case .REM:
                 plot_y = 1.0
             case .END:
-                plot_y = 0.0
+                plot_y = 5.0
             }
             let delta_t = hypnogram[index+1].begin - segment.begin
             
@@ -45,7 +45,7 @@ struct HypnogramPlot: View {
     
     var body: some View {
         
-        SCQuadCurve(config: SCQuadCurveConfig(chartData: hypnogram2Array(hypnogram: hypnogram.segments), showInterval: false, showXAxis: false, showYAxis: true, stroke: true, color: [.green]))
-            .frame(width: 260, height: 150)
+        SCQuadCurve(config: SCQuadCurveConfig(chartData: hypnogram2Array(hypnogram: hypnogram.segments), showInterval: false, showXAxis: false, showYAxis: true, stroke: true, color: [.green], minLower: 1.0, maxUpper: 5.0))
+            .frame(width: 260, height: 140)
     }
 }

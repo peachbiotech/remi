@@ -46,5 +46,11 @@
         "heartRate":  60, 
         "o2Sat": 98,
         "sleepStage": 4
+    },
+    {
+        "time": 1640258580,
+        "heartRate":  60,
+        "o2Sat": 98,
+        "sleepStage": 5
     }
 ]
