@@ -64,9 +64,6 @@ struct DailyView: View {
             }
             .padding()
             .navigationTitle("Sleep Summary")
-            .toolbar {
-                BottomToolbar()
-            }
         }
         .task {
             await self.sessionStore.load()

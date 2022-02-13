@@ -14,4 +14,6 @@ struct ColorManager {
     static let heartRatePanelColor = Color("HeartRatePanelColor")
     static let o2SaturationPanelColor = Color("O2SaturationPanelColor")
     static let sleepSummaryPanelColor = Color("SleepSummaryPanelColor")
+    static let bottomToolbarTextColor = Color("BottomToolbarTextColor")
+    static let bottomToolbarTextInactiveColor = Color("BottomToolbarTextInactiveColor")
 }
