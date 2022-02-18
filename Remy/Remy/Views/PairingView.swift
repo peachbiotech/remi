@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct PairingView: View {
-    @ObservedObject var bleManager = BLEManager()
+    @StateObject var bleManager = BLEManager()
     
     func shortListPeripherals(p: [Peripheral]) -> [Peripheral] {
         
@@ -17,9 +17,7 @@ struct PairingView: View {
     }
     
     init() {
-       UITableView.appearance().separatorStyle = .none
-       UITableViewCell.appearance().backgroundColor = .black
-       UITableView.appearance().backgroundColor = .black
+        UITableView.appearance().backgroundColor = UIColor(ColorManager.midNightBlue)
     }
     
     var body: some View {
@@ -29,18 +27,23 @@ struct PairingView: View {
                 .fontWeight(.bold)
                 .padding([.bottom], 100)
                 .foregroundColor(.white)
-            Text("Discovering your sleep tracker").foregroundColor(.white)
-            ProgressView()
+            HStack {
+                Text("Discovering your sleep tracker   ").foregroundColor(.white).font(.headline)
+                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+            }
+
             List {
                 Section(header: BLEListHeader()) {
                     if bleManager.isSwitchedOn {
                         if bleManager.peripherals.count != 0 {
                             ForEach (shortListPeripherals(p: bleManager.peripherals)) { peripheral in
-                                Button(action: {self.bleManager.connect(peripheral: peripheral.peripheral)}) {
-                                    HStack {
-                                        Text(peripheral.name)
-                                        Spacer()
-                                        Text(String(peripheral.rssi))
+                                NavigationLink(destination: PairedInfoView()) {
+                                    Button(action: {self.bleManager.connect(peripheral: peripheral.peripheral)}) {
+                                        HStack {
+                                            Text(peripheral.name).font(.headline)
+                                            Spacer()
+                                            Text("Connect")
+                                        }
                                     }
                                 }
                             }
@@ -54,11 +57,12 @@ struct PairingView: View {
                             .foregroundColor(.orange)
                     }
                 }
-                .listRowBackground(Color.secondary)
+                .listRowBackground(ColorManager.spaceGrey)
             }
             .listStyle(.insetGrouped)
+            .padding()
         }
-        .background(.black)
+        .background(ColorManager.midNightBlue)
         .onAppear {
             print("Pairing start")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

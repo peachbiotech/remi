@@ -74,6 +74,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         self.connectedPeripheral = peripheral
         self.connectedPeripheral?.delegate = self
         self.stopScanning()
+        // discoverServices will populate services and associated characteristics
         self.connectedPeripheral?.discoverServices(serviceUUIDS)
     }
      
@@ -123,6 +124,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
 }
 
 extension BLEManager: CBPeripheralDelegate {
+    
+    // Discover services
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {
             return
@@ -137,6 +140,7 @@ extension BLEManager: CBPeripheralDelegate {
         }
     }
     
+    // Discover characteristics
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else {
             return
@@ -153,4 +157,10 @@ extension BLEManager: CBPeripheralDelegate {
             }
         }
     }
+    
+    // Subscrible to BLE notifications
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        print("successfully subscribed to BLE notification")
+    }
+    
 }

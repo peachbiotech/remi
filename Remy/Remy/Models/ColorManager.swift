@@ -16,4 +16,6 @@ struct ColorManager {
     static let sleepSummaryPanelColor = Color("SleepSummaryPanelColor")
     static let bottomToolbarTextColor = Color("BottomToolbarTextColor")
     static let bottomToolbarTextInactiveColor = Color("BottomToolbarTextInactiveColor")
+    static let midNightBlue = Color("MidnightBlue")
+    static let spaceGrey = Color("SpaceGrey")
 }
