@@ -37,14 +37,16 @@ struct PairingView: View {
                     if bleManager.isSwitchedOn {
                         if bleManager.peripherals.count != 0 {
                             ForEach (shortListPeripherals(p: bleManager.peripherals)) { peripheral in
-                                NavigationLink(destination: PairedInfoView()) {
-                                    Button(action: {self.bleManager.connect(peripheral: peripheral.peripheral)}) {
-                                        HStack {
-                                            Text(peripheral.name).font(.headline)
-                                            Spacer()
-                                            Text("Connect")
-                                        }
-                                    }
+                                NavigationLink(destination: PairedInfoView(bleManager: bleManager).onAppear(perform: {
+                                    print("connect")
+                                    self.bleManager.connect(peripheral: peripheral.peripheral)
+                                    })
+                                ) {
+                                    HStack {
+                                        Text(peripheral.name).font(.headline)
+                                        Spacer()
+                                        Text("Connect")
+                                    }.foregroundColor(.blue)
                                 }
                             }
                         }

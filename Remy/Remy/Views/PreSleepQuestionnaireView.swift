@@ -22,23 +22,27 @@ struct PreSleepQuestionnaireView: View {
             SliderQuestionnaire()
             SliderQuestionnaire()
             Spacer()
-            NavigationLink(destination: LiveSessionView(), tag: 1, selection: $userSelectContinue) {
-                HStack {
-                    Button(action: {userSelectContinue = 1}) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .fill(.gray)
-                            .frame(width: 150, height: 50)
-                            Text("skip").foregroundColor(.white)
-                        }
+            HStack {
+                NavigationLink(destination: LiveSessionView().onAppear(perform: {
+                    print("questionnaire skip")
+                    })
+                ) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            .fill(.gray)
+                        .frame(width: 150, height: 50)
+                        Text("skip").foregroundColor(.white)
                     }
-                    Button(action: {userSelectContinue = 1}) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .fill(.blue)
-                            .frame(width: 150, height: 50)
-                            Text("continue").foregroundColor(.white)
-                        }
+                }
+                NavigationLink(destination: LiveSessionView().onAppear(perform: {
+                    print("questionnaire filled")
+                    })
+                ) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            .fill(.blue)
+                        .frame(width: 150, height: 50)
+                        Text("continue").foregroundColor(.white)
                     }
                 }
             }

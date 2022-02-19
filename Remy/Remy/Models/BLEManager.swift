@@ -28,6 +28,18 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var isSwitchedOn = false
     @Published var peripherals = [Peripheral]()
     @Published var connectedPeripheral: CBPeripheral?
+
+    @Published var eegQuality: EEGQuality = EEGQuality.GOOD
+    @Published var heartRate = 0
+    @Published var o2Level = 0
+    @Published var batteryLevel: Int = 65
+    
+    @Published var hasEEG: Bool = true
+    @Published var hasHeart: Bool = false
+    @Published var hasO2: Bool = false
+    @Published var hasBattery: Bool = true
+    
+    @Published var isReady: Bool = false
     
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
@@ -67,8 +79,47 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     
     func disconnect(peripheral: CBPeripheral) {
         central.cancelPeripheralConnection(peripheral)
+        self.o2Level = 0
+        self.heartRate = 0
+        self.batteryLevel = 0
+        self.eegQuality = .GOOD
+        self.hasEEG = true
+        self.hasHeart = false
+        self.hasO2 = false
+        self.hasBattery = false
+        self.isReady = false
+
+    }
+
+    // Subscribe to heart rate measurement characteristic
+    func subscribeToHeartRateMeasurementCharacteristic(peripheral: CBPeripheral) {
+        if let heartRateMeasurementCharacteristic = heartRateMeasurementCharacteristic {
+            peripheral.setNotifyValue(true, for: heartRateMeasurementCharacteristic)
+        }
+    }
+
+    // Subscribe to oxygen measurement characteristic
+    func subscribeToO2MeasurementCharacteristic(peripheral: CBPeripheral) {
+        if let o2MeasurementCharacteristic = o2MeasurementCharacteristic {
+            peripheral.setNotifyValue(true, for: o2MeasurementCharacteristic)
+        }
+    }
+
+    // Unsubscribe to heart rate measurement characteristic
+    func unsubscribeToHeartRateMeasurementCharacteristic(peripheral: CBPeripheral) {
+        if let heartRateMeasurementCharacteristic = heartRateMeasurementCharacteristic {
+            peripheral.setNotifyValue(false, for: heartRateMeasurementCharacteristic)
+        }
+    }
+
+    // Unsubscribe to oxygen measurement characteristic
+    func unsubscribeToO2MeasurementCharacteristic(peripheral: CBPeripheral) {
+        if let o2MeasurementCharacteristic = o2MeasurementCharacteristic {
+            peripheral.setNotifyValue(false, for: o2MeasurementCharacteristic)
+        }
     }
     
+    // Successful connection to peripheral delegate method
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("successfully connected to peripheral device")
         self.connectedPeripheral = peripheral
@@ -78,14 +129,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         self.connectedPeripheral?.discoverServices(serviceUUIDS)
     }
      
+    // Failed to connect to peripheral delegate method
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         print("could not connect to peripheral device")
     }
     
+    // Disconnected from peripheral delegate method
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("successfully disconnected from peripheral device")
     }
     
+    // Discovered a peripheral delegate method
     func centralManager(_ central: CBCentralManager,
                         didDiscover: CBPeripheral,
                         advertisementData: [String : Any],
@@ -111,14 +165,48 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         }
     }
     
+    // Scan for peripherals
     func startScanning() {
          print("startScanning")
          central.scanForPeripherals(withServices: nil, options: nil)
      }
     
+    // Stop scanning for peripherals
     func stopScanning() {
         print("stopScanning")
         central.stopScan()
+    }
+
+    // Handle new heart rate measurement
+    func handleHeartRateMeasurement(data: UInt8) {
+        let temp = Int(data)
+        if temp > 0 {
+            self.heartRate = temp
+            self.hasHeart = true
+        }
+        else {
+            self.heartRate = 0
+            self.hasHeart = false
+        }
+        updateDeviceReady()
+    }
+
+    // handle new oxygen measurement
+    func handleO2Measurement(data: UInt8) {
+        let temp = Int(data)
+        if temp > 50 {
+            self.o2Level = temp
+            self.hasO2 = true
+        }
+        else {
+            self.o2Level = 0
+            self.hasO2 = false
+        }
+        updateDeviceReady()
+    }
+
+    func updateDeviceReady() {
+        self.isReady = self.hasEEG && self.hasHeart && self.hasO2 && self.hasBattery
     }
     
 }
@@ -150,17 +238,35 @@ extension BLEManager: CBPeripheralDelegate {
             if characteristic.uuid == heartRateMeasurementCharacteristicUUID {
                 print("found heart rate characteristic")
                 heartRateMeasurementCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
             }
             else if characteristic.uuid == o2MeasurementCharacteristicUUID {
                 print("found o2 characteristic")
                 o2MeasurementCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
             }
         }
     }
     
     // Subscrible to BLE notifications
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
-        print("successfully subscribed to BLE notification")
+        print("successfully toggled BLE notification ")
+    }
+
+    // Receive BLE notifications
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if characteristic.uuid == heartRateMeasurementCharacteristicUUID {
+            print("received heart rate measurement")
+            if let data = characteristic.value {
+                handleHeartRateMeasurement(data: data[0])
+            }
+        }
+        else if characteristic.uuid == o2MeasurementCharacteristicUUID {
+            print("received o2 measurement")
+            if let data = characteristic.value {
+                handleO2Measurement(data: data[0])
+            }
+        }
     }
     
 }

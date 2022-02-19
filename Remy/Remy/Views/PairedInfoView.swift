@@ -9,39 +9,7 @@ import SwiftUI
 
 struct PairedInfoView: View {
     
-    var batteryLevel = 65
-    var hasBattery: Bool {
-        if batteryLevel > 20 {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    var eegQuality: EEGQuality = EEGQuality.GOOD
-    var hasEEG: Bool {
-        switch eegQuality {
-        case .NOSIGNAL:
-            return false
-        case .OK:
-            return false
-        case .GOOD:
-            return true
-        }
-    }
-    var heartRate: Int = 60
-    var hasHeart: Bool = true
-    var o2Level: Int = 98
-    var hasO2: Bool = true
-    
-    var checksComplete: Bool {
-        if (hasEEG && hasHeart && hasO2 && hasBattery) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
+    @ObservedObject var bleManager: BLEManager
     
     @State var userSelectContinue: Int? = nil
     
@@ -55,7 +23,7 @@ struct PairedInfoView: View {
             Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.headline).padding()
             HStack {
                 Text("Verifying sensors").foregroundColor(.white).font(.headline)
-                if !checksComplete {
+                if !bleManager.isReady {
                     ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                 }
                 else {
@@ -64,15 +32,15 @@ struct PairedInfoView: View {
             }
             Spacer()
             VStack {
-                BatteryLevelIndicator(batteryLevel: batteryLevel).foregroundColor(.white).padding(.vertical, 5)
-                EEGQualityIndicator(quality: eegQuality).foregroundColor(.white).padding(.vertical, 5)
-                HeartRateQualityIndicator(hasHeart: hasHeart, heartRate: heartRate).foregroundColor(.white).padding(.vertical, 5)
-                O2QualityIndicator(hasO2: hasO2, o2Level: o2Level).foregroundColor(.white).padding(.vertical, 5)
+                BatteryLevelIndicator(batteryLevel: bleManager.batteryLevel).foregroundColor(.white).padding(.vertical, 5)
+                EEGQualityIndicator(quality: bleManager.eegQuality).foregroundColor(.white).padding(.vertical, 5)
+                HeartRateQualityIndicator(hasHeart: bleManager.hasHeart, heartRate: bleManager.heartRate).foregroundColor(.white).padding(.vertical, 5)
+                O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: bleManager.o2Level).foregroundColor(.white).padding(.vertical, 5)
             }
             Spacer()
             
             NavigationLink(destination: PreSleepQuestionnaireView(), tag: 1, selection: $userSelectContinue) {
-                if checksComplete {
+                if bleManager.isReady {
                     Button(action: {userSelectContinue = 1}) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15, style: .continuous)
@@ -88,12 +56,11 @@ struct PairedInfoView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorManager.midNightBlue)
-        
     }
 }
 
 struct PairedInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PairedInfoView()
+        PairedInfoView(bleManager: BLEManager())
     }
 }

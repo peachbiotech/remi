@@ -47,7 +47,6 @@
 		B8D5EC2127BC214A00968F86 /* PreSleepQuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D5EC2027BC214A00968F86 /* PreSleepQuestionnaireView.swift */; };
 		B8D5EC2327BC2C3300968F86 /* SliderQuestionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D5EC2227BC2C3200968F86 /* SliderQuestionnaire.swift */; };
 		B8EFE45027C0369B00236A18 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE44F27C0369B00236A18 /* LiveSessionView.swift */; };
-		B8EFE45227C03D6400236A18 /* SleepTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE45127C03D6400236A18 /* SleepTracker.swift */; };
 		B8EFE45427C044A200236A18 /* LiveMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE45327C044A200236A18 /* LiveMetrics.swift */; };
 		B8FD0B31278DB42D001EE039 /* SampleSleepSession.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */; };
 		B8FD0B33278DF2F0001EE039 /* Vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD0B32278DF2F0001EE039 /* Vitals.swift */; };
@@ -114,7 +113,6 @@
 		B8D5EC2027BC214A00968F86 /* PreSleepQuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreSleepQuestionnaireView.swift; sourceTree = "<group>"; };
 		B8D5EC2227BC2C3200968F86 /* SliderQuestionnaire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderQuestionnaire.swift; sourceTree = "<group>"; };
 		B8EFE44F27C0369B00236A18 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
-		B8EFE45127C03D6400236A18 /* SleepTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTracker.swift; sourceTree = "<group>"; };
 		B8EFE45327C044A200236A18 /* LiveMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveMetrics.swift; sourceTree = "<group>"; };
 		B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleSleepSession.json; sourceTree = "<group>"; };
 		B8FD0B32278DF2F0001EE039 /* Vitals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vitals.swift; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 				B887458C27A0DA8E00032DC3 /* ColorManager.swift */,
 				B84A0F4227A19B2E007D2DDE /* ApplicationState.swift */,
 				B822106D27BADEEF00055A58 /* EEGQuality.swift */,
-				B8EFE45127C03D6400236A18 /* SleepTracker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -427,7 +424,6 @@
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
 				B822106A27BAD9FE00055A58 /* BatteryLevelIndicator.swift in Sources */,
 				B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */,
-				B8EFE45227C03D6400236A18 /* SleepTracker.swift in Sources */,
 				B8731675278CAADF00163E33 /* SessionStore.swift in Sources */,
 				B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */,
 				B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */,
