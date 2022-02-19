@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B822106827BAD26500055A58 /* PairedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822106727BAD26500055A58 /* PairedInfoView.swift */; };
+		B822106A27BAD9FE00055A58 /* BatteryLevelIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822106927BAD9FE00055A58 /* BatteryLevelIndicator.swift */; };
+		B822106E27BADEEF00055A58 /* EEGQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822106D27BADEEF00055A58 /* EEGQuality.swift */; };
+		B822107027BADF7300055A58 /* EEGQualityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822106F27BADF7300055A58 /* EEGQualityIndicator.swift */; };
+		B822107227BAE16D00055A58 /* HeartRateQualityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B822107127BAE16D00055A58 /* HeartRateQualityIndicator.swift */; };
 		B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848015A2746DBDD00B66439 /* RemyApp.swift */; };
 		B848015F2746DBDE00B66439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B848015E2746DBDE00B66439 /* Assets.xcassets */; };
 		B84801622746DBDE00B66439 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B84801612746DBDE00B66439 /* Preview Assets.xcassets */; };
@@ -16,13 +21,16 @@
 		B848017B2746DBDE00B66439 /* RemyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017A2746DBDE00B66439 /* RemyUITests.swift */; };
 		B848017D2746DBDE00B66439 /* RemyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */; };
 		B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8481B2727A06A280024683C /* SleepSnapShot.swift */; };
+		B84A0F4327A19B2E007D2DDE /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84A0F4227A19B2E007D2DDE /* ApplicationState.swift */; };
 		B8731675278CAADF00163E33 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8731674278CAADF00163E33 /* SessionStore.swift */; };
 		B887458B27A0D8D300032DC3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B887458A27A0D8D300032DC3 /* Colors.xcassets */; };
 		B887458D27A0DA8E00032DC3 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B887458C27A0DA8E00032DC3 /* ColorManager.swift */; };
+		B88D929927B95E4B00D02791 /* SleepRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88D929827B95E4B00D02791 /* SleepRecordView.swift */; };
+		B8C4171127BBED8700B19C3B /* O2QualityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4171027BBED8700B19C3B /* O2QualityIndicator.swift */; };
 		B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C603C4279EEC6800F0869D /* BLEManager.swift */; };
 		B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A42277EC8A400EA7A2A /* SleepSession.swift */; };
 		B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */; };
-		B8D44A47277ECA6700EA7A2A /* SleepStageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */; };
+		B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A46277ECA6700EA7A2A /* SleepStage.swift */; };
 		B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */; };
 		B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */; };
 		B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */; };
@@ -36,6 +44,10 @@
 		B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */; };
 		B8D44A92277F9E4600EA7A2A /* SimpleChart in Frameworks */ = {isa = PBXBuildFile; productRef = B8D44A91277F9E4600EA7A2A /* SimpleChart */; };
 		B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */; };
+		B8D5EC2127BC214A00968F86 /* PreSleepQuestionnaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D5EC2027BC214A00968F86 /* PreSleepQuestionnaireView.swift */; };
+		B8D5EC2327BC2C3300968F86 /* SliderQuestionnaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D5EC2227BC2C3200968F86 /* SliderQuestionnaire.swift */; };
+		B8EFE45027C0369B00236A18 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE44F27C0369B00236A18 /* LiveSessionView.swift */; };
+		B8EFE45427C044A200236A18 /* LiveMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE45327C044A200236A18 /* LiveMetrics.swift */; };
 		B8FD0B31278DB42D001EE039 /* SampleSleepSession.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */; };
 		B8FD0B33278DF2F0001EE039 /* Vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD0B32278DF2F0001EE039 /* Vitals.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +70,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B822106727BAD26500055A58 /* PairedInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedInfoView.swift; sourceTree = "<group>"; };
+		B822106927BAD9FE00055A58 /* BatteryLevelIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryLevelIndicator.swift; sourceTree = "<group>"; };
+		B822106D27BADEEF00055A58 /* EEGQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EEGQuality.swift; sourceTree = "<group>"; };
+		B822106F27BADF7300055A58 /* EEGQualityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EEGQualityIndicator.swift; sourceTree = "<group>"; };
+		B822107127BAE16D00055A58 /* HeartRateQualityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateQualityIndicator.swift; sourceTree = "<group>"; };
 		B84801572746DBDD00B66439 /* Remy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848015A2746DBDD00B66439 /* RemyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyApp.swift; sourceTree = "<group>"; };
 		B848015E2746DBDE00B66439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,14 +87,17 @@
 		B848017A2746DBDE00B66439 /* RemyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITests.swift; sourceTree = "<group>"; };
 		B848017C2746DBDE00B66439 /* RemyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B8481B2727A06A280024683C /* SleepSnapShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSnapShot.swift; sourceTree = "<group>"; };
+		B84A0F4227A19B2E007D2DDE /* ApplicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationState.swift; sourceTree = "<group>"; };
 		B8731674278CAADF00163E33 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		B887458A27A0D8D300032DC3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B887458C27A0DA8E00032DC3 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		B887458E27A0F49000032DC3 /* SimpleChart */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SimpleChart; path = ../../SimpleChart; sourceTree = "<group>"; };
+		B88D929827B95E4B00D02791 /* SleepRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecordView.swift; sourceTree = "<group>"; };
+		B8C4171027BBED8700B19C3B /* O2QualityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2QualityIndicator.swift; sourceTree = "<group>"; };
 		B8C603C4279EEC6800F0869D /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		B8D44A42277EC8A400EA7A2A /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
 		B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hypnogram.swift; sourceTree = "<group>"; };
-		B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStageType.swift; sourceTree = "<group>"; };
+		B8D44A46277ECA6700EA7A2A /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
 		B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramSegment.swift; sourceTree = "<group>"; };
 		B8D44A4E277EE29F00EA7A2A /* O2Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2Panel.swift; sourceTree = "<group>"; };
 		B8D44A50277EE2AD00EA7A2A /* HeartRatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRatePanel.swift; sourceTree = "<group>"; };
@@ -90,6 +110,10 @@
 		B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryPanel.swift; sourceTree = "<group>"; };
 		B8D44A67277F934000EA7A2A /* HypnogramPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypnogramPlot.swift; sourceTree = "<group>"; };
 		B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbar.swift; sourceTree = "<group>"; };
+		B8D5EC2027BC214A00968F86 /* PreSleepQuestionnaireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreSleepQuestionnaireView.swift; sourceTree = "<group>"; };
+		B8D5EC2227BC2C3200968F86 /* SliderQuestionnaire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderQuestionnaire.swift; sourceTree = "<group>"; };
+		B8EFE44F27C0369B00236A18 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
+		B8EFE45327C044A200236A18 /* LiveMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveMetrics.swift; sourceTree = "<group>"; };
 		B8FD0B30278DB42D001EE039 /* SampleSleepSession.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleSleepSession.json; sourceTree = "<group>"; };
 		B8FD0B32278DF2F0001EE039 /* Vitals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vitals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,13 +212,15 @@
 			children = (
 				B8D44A42277EC8A400EA7A2A /* SleepSession.swift */,
 				B8D44A44277EC99D00EA7A2A /* Hypnogram.swift */,
-				B8D44A46277ECA6700EA7A2A /* SleepStageType.swift */,
+				B8D44A46277ECA6700EA7A2A /* SleepStage.swift */,
 				B8D44A48277ECB9C00EA7A2A /* HypnogramSegment.swift */,
 				B8731674278CAADF00163E33 /* SessionStore.swift */,
 				B8FD0B32278DF2F0001EE039 /* Vitals.swift */,
 				B8481B2727A06A280024683C /* SleepSnapShot.swift */,
 				B8C603C4279EEC6800F0869D /* BLEManager.swift */,
 				B887458C27A0DA8E00032DC3 /* ColorManager.swift */,
+				B84A0F4227A19B2E007D2DDE /* ApplicationState.swift */,
+				B822106D27BADEEF00055A58 /* EEGQuality.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,9 +236,19 @@
 				B8D44A58277EE3A300EA7A2A /* DailyView.swift */,
 				B8D44A5A277EE3B500EA7A2A /* WelcomeView.swift */,
 				B8D44A5C277EE3BD00EA7A2A /* PairingView.swift */,
+				B822106727BAD26500055A58 /* PairedInfoView.swift */,
+				B88D929827B95E4B00D02791 /* SleepRecordView.swift */,
 				B8D44A5E277EE3DF00EA7A2A /* AboutView.swift */,
 				B8D44A60277F8C1000EA7A2A /* SleepSummaryPanel.swift */,
 				B8D44A93277FE23400EA7A2A /* BottomToolbar.swift */,
+				B822106927BAD9FE00055A58 /* BatteryLevelIndicator.swift */,
+				B822106F27BADF7300055A58 /* EEGQualityIndicator.swift */,
+				B822107127BAE16D00055A58 /* HeartRateQualityIndicator.swift */,
+				B8C4171027BBED8700B19C3B /* O2QualityIndicator.swift */,
+				B8D5EC2027BC214A00968F86 /* PreSleepQuestionnaireView.swift */,
+				B8D5EC2227BC2C3200968F86 /* SliderQuestionnaire.swift */,
+				B8EFE44F27C0369B00236A18 /* LiveSessionView.swift */,
+				B8EFE45327C044A200236A18 /* LiveMetrics.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,28 +399,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */,
+				B8C4171127BBED8700B19C3B /* O2QualityIndicator.swift in Sources */,
 				B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */,
 				B8D44A5F277EE3DF00EA7A2A /* AboutView.swift in Sources */,
+				B84A0F4327A19B2E007D2DDE /* ApplicationState.swift in Sources */,
 				B8D44A5B277EE3B500EA7A2A /* WelcomeView.swift in Sources */,
 				B8D44A59277EE3A300EA7A2A /* DailyView.swift in Sources */,
+				B88D929927B95E4B00D02791 /* SleepRecordView.swift in Sources */,
 				B84801642746DBDE00B66439 /* Persistence.swift in Sources */,
 				B8FD0B33278DF2F0001EE039 /* Vitals.swift in Sources */,
 				B8D44A49277ECB9D00EA7A2A /* HypnogramSegment.swift in Sources */,
+				B8EFE45427C044A200236A18 /* LiveMetrics.swift in Sources */,
 				B8D44A45277EC99E00EA7A2A /* Hypnogram.swift in Sources */,
 				B8D44A68277F934000EA7A2A /* HypnogramPlot.swift in Sources */,
-				B8D44A47277ECA6700EA7A2A /* SleepStageType.swift in Sources */,
+				B8D5EC2327BC2C3300968F86 /* SliderQuestionnaire.swift in Sources */,
+				B8D44A47277ECA6700EA7A2A /* SleepStage.swift in Sources */,
 				B8D44A43277EC8A400EA7A2A /* SleepSession.swift in Sources */,
 				B8D44A5D277EE3BD00EA7A2A /* PairingView.swift in Sources */,
+				B822107027BADF7300055A58 /* EEGQualityIndicator.swift in Sources */,
+				B8EFE45027C0369B00236A18 /* LiveSessionView.swift in Sources */,
 				B8D44A57277EE39A00EA7A2A /* TrendsView.swift in Sources */,
 				B887458D27A0DA8E00032DC3 /* ColorManager.swift in Sources */,
+				B822106E27BADEEF00055A58 /* EEGQuality.swift in Sources */,
 				B84801672746DBDE00B66439 /* Remy.xcdatamodeld in Sources */,
+				B822106A27BAD9FE00055A58 /* BatteryLevelIndicator.swift in Sources */,
 				B8481B2827A06A280024683C /* SleepSnapShot.swift in Sources */,
 				B8731675278CAADF00163E33 /* SessionStore.swift in Sources */,
 				B8C603C5279EEC6800F0869D /* BLEManager.swift in Sources */,
 				B8D44A61277F8C1000EA7A2A /* SleepSummaryPanel.swift in Sources */,
 				B8D44A53277EE2BA00EA7A2A /* HypnogramView.swift in Sources */,
 				B8D44A94277FE23400EA7A2A /* BottomToolbar.swift in Sources */,
+				B8D5EC2127BC214A00968F86 /* PreSleepQuestionnaireView.swift in Sources */,
 				B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */,
+				B822107227BAE16D00055A58 /* HeartRateQualityIndicator.swift in Sources */,
+				B822106827BAD26500055A58 /* PairedInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +597,7 @@
 				DEVELOPMENT_TEAM = Y483XQUDGK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth for pairing peripheral devices";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -580,6 +629,7 @@
 				DEVELOPMENT_TEAM = Y483XQUDGK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth for pairing peripheral devices";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

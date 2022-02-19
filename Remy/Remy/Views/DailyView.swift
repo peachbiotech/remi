@@ -59,14 +59,11 @@ struct DailyView: View {
                     Spacer()
                 }
                 else {
-                    Text("No sleep data available for current date" + " 😪").padding(.top, 10.0)
+                    Text("No sleep data available for current date" + " 😪").padding(.top, 50.0)
                 }
             }
             .padding()
             .navigationTitle("Sleep Summary")
-            .toolbar {
-                BottomToolbar()
-            }
         }
         .task {
             await self.sessionStore.load()

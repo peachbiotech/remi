@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SleepSummaryPanel: View {
+    var sleepGoal: Int = 8*60
     var sleepDuration: Int
     var hours: Int {
         sleepDuration / 60
@@ -21,8 +22,8 @@ struct SleepSummaryPanel: View {
         }
     }
     var summaryMsg: String {
-        if sleepDuration > 8*60 {
-            return "Congrats! You met your sleep goal!"
+        if sleepDuration >= sleepGoal {
+            return "Congrats🎉 You met your sleep goal!"
         }
         else if sleepDuration < 1*60 {
             return "Insufficient sleep data"
