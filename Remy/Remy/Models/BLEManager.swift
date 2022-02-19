@@ -40,19 +40,27 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var hasBattery: Bool = true
     
     @Published var isReady: Bool = false
+    private var heartRateNotReadyCount: Int = 0
+    private var o2NotReadyCount: Int = 0
+
+    @Published var readRate: Int = 0
     
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
+    private let heartRateO2ReadRateServiceUUID = CBUUID(string: "71b55e6a-a938-432c-9304-b119b4f626d2")
     
     // Characteristic UUIDs
     // HEARTRATEO2_SERVICE
     private let heartRateMeasurementCharacteristicUUID = CBUUID(string: "179499e2-a77f-44e8-893a-3e05a904d0e2")
     private let o2MeasurementCharacteristicUUID = CBUUID(string: "3b040b83-161b-4a11-8ef8-6a869b06e1e9")
+    // HEARTRATEO2_READ_RATE_SERVICE
+    private let heartRateO2ReadRateCharacteristicUUID = CBUUID(string: "aba135ba-32a2-4190-a3d6-b26bdc8f123d")
     
     private let serviceUUIDS: [CBUUID]
     
     private var heartRateMeasurementCharacteristic: CBCharacteristic?
     private var o2MeasurementCharacteristic: CBCharacteristic?
+    private var heartRateO2ReadRateCharacteristic: CBCharacteristic?
     
     var central: CBCentralManager!
     
@@ -88,7 +96,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         self.hasO2 = false
         self.hasBattery = false
         self.isReady = false
-
+        self.readRate = 0
     }
 
     // Subscribe to heart rate measurement characteristic
@@ -183,10 +191,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         if temp > 0 {
             self.heartRate = temp
             self.hasHeart = true
+            heartRateNotReadyCount = 0
         }
         else {
-            self.heartRate = 0
-            self.hasHeart = false
+            heartRateNotReadyCount += 1
+            if (heartRateNotReadyCount >= 10) {
+                self.heartRate = 0
+                self.hasHeart = false
+            }
         }
         updateDeviceReady()
     }
@@ -197,16 +209,35 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         if temp > 50 {
             self.o2Level = temp
             self.hasO2 = true
+            o2NotReadyCount = 0
         }
         else {
-            self.o2Level = 0
-            self.hasO2 = false
+            o2NotReadyCount += 1
+            if (o2NotReadyCount >= 10) {
+                self.o2Level = 0
+                self.hasO2 = false
+            }
         }
         updateDeviceReady()
     }
 
     func updateDeviceReady() {
         self.isReady = self.hasEEG && self.hasHeart && self.hasO2 && self.hasBattery
+    }
+    
+    func getReadRate() {
+        if (heartRateO2ReadRateCharacteristic != nil) && (self.connectedPeripheral != nil) {
+            self.connectedPeripheral!.readValue(for: heartRateO2ReadRateCharacteristic!)
+        }
+    }
+
+    func setReadRate(rate: String) {
+
+        let data: Data? = rate.data(using: .utf8)
+        
+        if (heartRateO2ReadRateCharacteristic != nil) && (self.connectedPeripheral != nil) {
+            self.connectedPeripheral!.writeValue(data!, for: heartRateO2ReadRateCharacteristic!, type: .withoutResponse)
+        }
     }
     
 }
@@ -245,6 +276,10 @@ extension BLEManager: CBPeripheralDelegate {
                 o2MeasurementCharacteristic = characteristic
                 peripheral.setNotifyValue(true, for: characteristic)
             }
+            else if characteristic.uuid == heartRateO2ReadRateCharacteristicUUID {
+                print("found read rate characteristic")
+                heartRateO2ReadRateCharacteristic = characteristic
+            }
         }
     }
     
@@ -253,7 +288,7 @@ extension BLEManager: CBPeripheralDelegate {
         print("successfully toggled BLE notification ")
     }
 
-    // Receive BLE notifications
+    // BLE value reads
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if characteristic.uuid == heartRateMeasurementCharacteristicUUID {
             print("received heart rate measurement")
@@ -265,6 +300,12 @@ extension BLEManager: CBPeripheralDelegate {
             print("received o2 measurement")
             if let data = characteristic.value {
                 handleO2Measurement(data: data[0])
+            }
+        }
+        else if characteristic.uuid == heartRateO2ReadRateCharacteristicUUID {
+            print("received current read rate")
+            if let data = characteristic.value {
+                print(data)
             }
         }
     }

@@ -7,17 +7,14 @@
 import SwiftUI
 
 struct PairingView: View {
-    @StateObject var bleManager = BLEManager()
+    @ObservedObject var bleManager: BLEManager
+    @Binding var isRecording: Bool
     
     func shortListPeripherals(p: [Peripheral]) -> [Peripheral] {
         
         let namedPeripherals = p.filter { $0.name != "Unknown" }
 
         return namedPeripherals.sorted(by: >)
-    }
-    
-    init() {
-        UITableView.appearance().backgroundColor = UIColor(ColorManager.midNightBlue)
     }
     
     var body: some View {
@@ -37,9 +34,10 @@ struct PairingView: View {
                     if bleManager.isSwitchedOn {
                         if bleManager.peripherals.count != 0 {
                             ForEach (shortListPeripherals(p: bleManager.peripherals)) { peripheral in
-                                NavigationLink(destination: PairedInfoView(bleManager: bleManager).onAppear(perform: {
+                                NavigationLink(destination: PairedInfoView(bleManager: bleManager, isRecording: $isRecording).onAppear(perform: {
                                     print("connect")
                                     self.bleManager.connect(peripheral: peripheral.peripheral)
+                                    self.bleManager.setReadRate(rate: "500")
                                     })
                                 ) {
                                     HStack {
@@ -66,6 +64,7 @@ struct PairingView: View {
         }
         .background(ColorManager.midNightBlue)
         .onAppear {
+            UITableView.appearance().backgroundColor = UIColor(ColorManager.midNightBlue)
             print("Pairing start")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.bleManager.startScanning()
@@ -91,7 +90,7 @@ struct BLEListHeader: View {
 struct PairingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PairingView()
+            PairingView(bleManager: BLEManager(), isRecording: .constant(false))
         }
     }
 }

@@ -22,35 +22,10 @@ struct PreSleepQuestionnaireView: View {
             SliderQuestionnaire()
             SliderQuestionnaire()
             Spacer()
-            HStack {
-                NavigationLink(destination: LiveSessionView().onAppear(perform: {
-                    print("questionnaire skip")
-                    })
-                ) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .fill(.gray)
-                        .frame(width: 150, height: 50)
-                        Text("skip").foregroundColor(.white)
-                    }
-                }
-                NavigationLink(destination: LiveSessionView().onAppear(perform: {
-                    print("questionnaire filled")
-                    })
-                ) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .fill(.blue)
-                        .frame(width: 150, height: 50)
-                        Text("continue").foregroundColor(.white)
-                    }
-                }
-            }
-            Spacer()
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorManager.midNightBlue)
+        .background(ColorManager.spaceGrey)
     }
 }
 

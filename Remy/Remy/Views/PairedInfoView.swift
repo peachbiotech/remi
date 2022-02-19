@@ -11,25 +11,37 @@ struct PairedInfoView: View {
     
     @ObservedObject var bleManager: BLEManager
     
-    @State var userSelectContinue: Int? = nil
+    @State private var isPresentingQuestionnaire = false
+    @Binding var isRecording: Bool
     
     var body: some View {
         VStack {
-            Text("Fitcheck")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding([.bottom], 100)
-                .foregroundColor(.white)
-            Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.headline).padding()
-            HStack {
-                Text("Verifying sensors").foregroundColor(.white).font(.headline)
-                if !bleManager.isReady {
-                    ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                }
-                else {
-                    Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+            if !isRecording {
+                Text("Fitcheck 😎")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding([.bottom], 100)
+                    .foregroundColor(.white)
+                Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.headline).padding()
+                HStack {
+                    Text("Verifying sensors ").foregroundColor(.white).font(.headline)
+                    if !bleManager.isReady {
+                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                    }
+                    else {
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
+                    }
                 }
             }
+            else {
+                Text("Setup complete")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding([.bottom], 100)
+                    .foregroundColor(.white)
+                Text("Sweet dreams 🤗").foregroundColor(.white).font(.headline).padding()
+            }
+            
             Spacer()
             VStack {
                 BatteryLevelIndicator(batteryLevel: bleManager.batteryLevel).foregroundColor(.white).padding(.vertical, 5)
@@ -38,16 +50,13 @@ struct PairedInfoView: View {
                 O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: bleManager.o2Level).foregroundColor(.white).padding(.vertical, 5)
             }
             Spacer()
-            
-            NavigationLink(destination: PreSleepQuestionnaireView(), tag: 1, selection: $userSelectContinue) {
-                if bleManager.isReady {
-                    Button(action: {userSelectContinue = 1}) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .fill(.blue)
-                            .frame(width: 170, height: 50)
-                            Text("continue").foregroundColor(.white)
-                        }
+            if bleManager.isReady && !isRecording{
+                Button(action: {isPresentingQuestionnaire = true}) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            .fill(.blue)
+                        .frame(width: 170, height: 50)
+                        Text("continue").foregroundColor(.white)
                     }
                 }
             }
@@ -56,11 +65,32 @@ struct PairedInfoView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorManager.midNightBlue)
+        .sheet(isPresented: $isPresentingQuestionnaire) {
+            NavigationView {
+                PreSleepQuestionnaireView()
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Skip") {
+                                isPresentingQuestionnaire = false
+                                isRecording = true
+                                // spawn background process for collecting data, save survey results
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Continue") {
+                                isPresentingQuestionnaire = false
+                                isRecording = true
+                            }
+                        }
+                    }
+            }
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 struct PairedInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PairedInfoView(bleManager: BLEManager())
+        PairedInfoView(bleManager: BLEManager(), isRecording: .constant(false))
     }
 }

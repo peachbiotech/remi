@@ -9,7 +9,9 @@ import SwiftUI
 
 @main
 struct RemyApp: App {
+    @StateObject var bleManager = BLEManager()
     @State private var appState: ApplicationState = ApplicationState()
+    @State private var isRecording: Bool = false
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -19,7 +21,12 @@ struct RemyApp: App {
                 case ApplicationStateType.WELCOME:
                     WelcomeView()
                 case ApplicationStateType.PAIRING:
-                    PairingView()
+                    if bleManager.connectedPeripheral == nil {
+                        PairingView(bleManager: bleManager, isRecording: $isRecording)
+                    }
+                    else {
+                        PairedInfoView(bleManager: bleManager, isRecording: $isRecording)
+                    }
                 case ApplicationStateType.DAILY:
                     DailyView(saveAction: {})
                 case ApplicationStateType.TRENDS:
