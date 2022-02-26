@@ -11,22 +11,26 @@ struct O2QualityIndicator: View {
     var o2Level: Int
     
     var body: some View {
-        HStack {
-            Text("Oxygen: ")
-            Spacer()
-            if hasO2 {
-                HStack {
-                    Text("\(o2Level)%").font(.caption)
-                    Image(systemName: "lungs.fill").foregroundColor(.green)
+        ZStack {
+            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            HStack {
+                Text("Oxygen: ").font(.title3)
+                    .multilineTextAlignment(.leading).foregroundColor(.white)
+                Spacer()
+                if hasO2 {
+                    HStack {
+                        Text("\(o2Level)%").font(.headline).foregroundColor(.white)
+                        Image(systemName: "lungs.fill").resizable().scaledToFit().frame(width: 30.0).foregroundColor(.green)
+                    }
                 }
-            }
-            else {
-                HStack {
-                    Image(systemName: "lungs").foregroundColor(.gray)
-                    Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
+                else {
+                    HStack {
+                        Image(systemName: "lungs").resizable().scaledToFit().frame(width: 30.0).foregroundColor(.gray)
+                        Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
+                    }
                 }
-            }
-        }.padding(.horizontal, 80)
+            }.padding(.horizontal, 30)
+        }
     }
 }
 

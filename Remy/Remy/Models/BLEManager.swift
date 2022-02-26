@@ -32,7 +32,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var eegQuality: EEGQuality = EEGQuality.GOOD
     @Published var heartRate = 0
     @Published var o2Level = 0
-    @Published var batteryLevel: Int = 65
+    @Published var batteryPercentage: Int = 0
     
     @Published var hasEEG: Bool = true
     @Published var hasHeart: Bool = false
@@ -48,6 +48,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
     private let heartRateO2ReadRateServiceUUID = CBUUID(string: "71b55e6a-a938-432c-9304-b119b4f626d2")
+    private let batteryServiceUUID = CBUUID(string: "d650e494-beac-45e5-ab00-d27ae4f9c603")
     
     // Characteristic UUIDs
     // HEARTRATEO2_SERVICE
@@ -55,17 +56,22 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     private let o2MeasurementCharacteristicUUID = CBUUID(string: "3b040b83-161b-4a11-8ef8-6a869b06e1e9")
     // HEARTRATEO2_READ_RATE_SERVICE
     private let heartRateO2ReadRateCharacteristicUUID = CBUUID(string: "aba135ba-32a2-4190-a3d6-b26bdc8f123d")
+    // BATTERY_SERVICE
+    private let batteryLevelCharacteristicUUID = CBUUID(string: "64cb58e5-c7c6-4976-bfb2-8b0cb7527c22")
+    private let batteryVoltageCharacteristicUUID = CBUUID(string: "8a1c6667-e658-4c43-9894-f6b119abb755")
     
     private let serviceUUIDS: [CBUUID]
     
     private var heartRateMeasurementCharacteristic: CBCharacteristic?
     private var o2MeasurementCharacteristic: CBCharacteristic?
     private var heartRateO2ReadRateCharacteristic: CBCharacteristic?
+    private var batteryLevelCharacteristic: CBCharacteristic?
+    private var batteryVoltageCharacteristic: CBCharacteristic?
     
     var central: CBCentralManager!
     
     override init() {
-        serviceUUIDS = [heartRateO2ServiceUUID]
+        serviceUUIDS = [heartRateO2ServiceUUID, batteryServiceUUID]
         super.init()
 
         central = CBCentralManager(delegate: self, queue: nil)
@@ -89,7 +95,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         central.cancelPeripheralConnection(peripheral)
         self.o2Level = 0
         self.heartRate = 0
-        self.batteryLevel = 0
+        self.batteryPercentage = 0
         self.eegQuality = .GOOD
         self.hasEEG = true
         self.hasHeart = false
@@ -124,6 +130,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     func unsubscribeToO2MeasurementCharacteristic(peripheral: CBPeripheral) {
         if let o2MeasurementCharacteristic = o2MeasurementCharacteristic {
             peripheral.setNotifyValue(false, for: o2MeasurementCharacteristic)
+        }
+    }
+    
+    func readBatteryVoltage(peripheral: CBPeripheral) {
+        if let batteryVoltageCharacteristic = batteryVoltageCharacteristic {
+            peripheral.readValue(for: batteryVoltageCharacteristic)
         }
     }
     
@@ -220,8 +232,29 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         }
         updateDeviceReady()
     }
+    
+    // handle battery voltage read
+    
+    func handleBatteryVoltageRead(data: String) {
+        let voltage = Float(data) ?? 0
+        print("battery voltage: \(voltage)")
+        let batteryVoltageMax = Float(4.0)
+        let batteryVoltageMin = Float(3.2)
+        
+        var percentage = Int(100 * (voltage - batteryVoltageMin) / (batteryVoltageMax - batteryVoltageMin))
+        print("battery 0: \((voltage - batteryVoltageMin))")
+        percentage = min(max(percentage, 0), 100)
+        if percentage > 0 {
+            self.hasBattery = true
+            self.batteryPercentage = percentage
+        }
+        print("battery percentage: \(self.batteryPercentage)")
+    }
 
     func updateDeviceReady() {
+        if !self.hasBattery {
+            readBatteryVoltage(peripheral: self.connectedPeripheral!)
+        }
         self.isReady = self.hasEEG && self.hasHeart && self.hasO2 && self.hasBattery
     }
     
@@ -256,6 +289,11 @@ extension BLEManager: CBPeripheralDelegate {
                 peripheral.discoverCharacteristics([heartRateMeasurementCharacteristicUUID,
                                                     o2MeasurementCharacteristicUUID], for: service)
             }
+            if service.uuid == batteryServiceUUID {
+                print("found battery service")
+                peripheral.discoverCharacteristics([batteryLevelCharacteristicUUID,
+                                                    batteryVoltageCharacteristicUUID], for: service)
+            }
         }
     }
     
@@ -279,6 +317,14 @@ extension BLEManager: CBPeripheralDelegate {
             else if characteristic.uuid == heartRateO2ReadRateCharacteristicUUID {
                 print("found read rate characteristic")
                 heartRateO2ReadRateCharacteristic = characteristic
+            }
+            else if characteristic.uuid == batteryLevelCharacteristicUUID {
+                batteryLevelCharacteristic = characteristic
+            }
+            else if characteristic.uuid == batteryVoltageCharacteristicUUID {
+                print("found battery characteristic")
+                batteryVoltageCharacteristic = characteristic
+                self.readBatteryVoltage(peripheral: connectedPeripheral!)
             }
         }
     }
@@ -306,6 +352,20 @@ extension BLEManager: CBPeripheralDelegate {
             print("received current read rate")
             if let data = characteristic.value {
                 print(data)
+            }
+        }
+        else if characteristic.uuid == batteryLevelCharacteristicUUID {
+            return
+        }
+        else if characteristic.uuid == batteryVoltageCharacteristicUUID {
+            print("received battery voltage")
+            
+            guard let batteryVoltage = characteristic.value else {
+                return
+            }
+            
+            if let dataString = NSString.init(data: batteryVoltage, encoding: String.Encoding.utf8.rawValue) as String? {
+                handleBatteryVoltageRead(data: dataString)
             }
         }
     }

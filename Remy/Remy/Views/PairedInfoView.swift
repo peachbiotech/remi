@@ -22,9 +22,9 @@ struct PairedInfoView: View {
                     .fontWeight(.bold)
                     .padding([.bottom], 100)
                     .foregroundColor(.white)
-                Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.headline).padding()
+                Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.title2).multilineTextAlignment(.center).padding()
                 HStack {
-                    Text("Verifying sensors ").foregroundColor(.white).font(.headline)
+                    Text("Verifying sensors ").foregroundColor(.white).font(.title3)
                     if !bleManager.isReady {
                         ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                     }
@@ -39,15 +39,15 @@ struct PairedInfoView: View {
                     .fontWeight(.bold)
                     .padding([.bottom], 100)
                     .foregroundColor(.white)
-                Text("Sweet dreams 🤗").foregroundColor(.white).font(.headline).padding()
+                Text("Sweet dreams 🤗").foregroundColor(.white).font(.title2).padding()
             }
             
             Spacer()
             VStack {
-                BatteryLevelIndicator(batteryLevel: bleManager.batteryLevel).foregroundColor(.white).padding(.vertical, 5)
-                EEGQualityIndicator(quality: bleManager.eegQuality).foregroundColor(.white).padding(.vertical, 5)
-                HeartRateQualityIndicator(hasHeart: bleManager.hasHeart, heartRate: bleManager.heartRate).foregroundColor(.white).padding(.vertical, 5)
-                O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: bleManager.o2Level).foregroundColor(.white).padding(.vertical, 5)
+                BatteryLevelIndicator(batteryLevel: bleManager.batteryPercentage).foregroundColor(.white).padding(.horizontal)
+                EEGQualityIndicator(quality: bleManager.eegQuality).foregroundColor(.white).padding(.horizontal)
+                HeartRateQualityIndicator(hasHeart: bleManager.hasHeart, heartRate: bleManager.heartRate).foregroundColor(.white).padding(.horizontal)
+                O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: bleManager.o2Level).foregroundColor(.white).padding(.horizontal)
             }
             Spacer()
             if bleManager.isReady && !isRecording{

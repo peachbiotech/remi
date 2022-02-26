@@ -11,21 +11,25 @@ struct EEGQualityIndicator: View {
     var quality: EEGQuality
     
     var body: some View {
-        HStack {
-            Text("EEG:")
-            Spacer()
-            switch quality {
-            case .NOSIGNAL:
-                HStack {
-                    Image(systemName: "waveform").foregroundColor(.gray)
-                    Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
+        ZStack {
+            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            HStack {
+                Text("EEG:").font(.title3)
+                    .multilineTextAlignment(.leading).foregroundColor(.white)
+                Spacer()
+                switch quality {
+                case .NOSIGNAL:
+                    HStack {
+                        Image(systemName: "waveform").resizable().scaledToFit().frame(width: 20.0).foregroundColor(.gray)
+                        Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
+                    }
+                case .OK:
+                    Image(systemName: "waveform").resizable().scaledToFit().frame(width: 20.0).foregroundColor(.yellow)
+                case .GOOD:
+                    Image(systemName: "waveform").resizable().scaledToFit().frame(width: 20.0).foregroundColor(.teal)
                 }
-            case .OK:
-                Image(systemName: "waveform").foregroundColor(.yellow)
-            case .GOOD:
-                Image(systemName: "waveform").foregroundColor(.teal)
-            }
-        }.padding(.horizontal, 80)
+            }.padding(.horizontal, 30)
+        }
     }
 }
 

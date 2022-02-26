@@ -29,19 +29,23 @@ struct BatteryLevelIndicator: View {
     }
     
     var body: some View {
-        HStack {
-            Text("Battery: ")
-            Spacer()
+        ZStack {
+            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
             HStack {
+                Text("Battery: ").font(.title3)
+                    .multilineTextAlignment(.leading).foregroundColor(.white)
+                Spacer()
                 HStack {
-                    Text(" \(batteryLevel)%").font(.footnote)
-                    batteryIcon
+                    HStack {
+                        Text(" \(batteryLevel)%").font(.headline).foregroundColor(.white)
+                        batteryIcon.resizable().scaledToFit().frame(width: 30.0).foregroundColor(.white)
+                    }
+                    if batteryLevel < 20 {
+                        Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
+                    }
                 }
-                if batteryLevel < 20 {
-                    Image(systemName: "exclamationmark.circle.fill").foregroundColor(.yellow)
-                }
-            }
-        }.padding(.horizontal, 80)
+            }.padding(.horizontal, 30)
+        }
     }
 }
 

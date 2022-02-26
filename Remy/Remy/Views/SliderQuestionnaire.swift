@@ -20,10 +20,10 @@ struct SliderQuestionnaire: View {
         VStack {
             HStack {
                 Text(question).foregroundColor(.white)
-                questionIcon.foregroundColor(.white)
                 Spacer()
                 Text("\(Int(sliderVal))")
                     .foregroundColor(isEditing ? .blue : .white)
+                questionIcon.foregroundColor(.white)
             }
             Slider(
                 value: $sliderVal,

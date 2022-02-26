@@ -21,7 +21,7 @@ struct RemyApp: App {
                 case ApplicationStateType.WELCOME:
                     WelcomeView()
                 case ApplicationStateType.PAIRING:
-                    if bleManager.connectedPeripheral == nil {
+                    if !isRecording {
                         PairingView(bleManager: bleManager, isRecording: $isRecording)
                     }
                     else {

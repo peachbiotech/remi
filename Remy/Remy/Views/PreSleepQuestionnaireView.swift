@@ -18,9 +18,9 @@ struct PreSleepQuestionnaireView: View {
                 .fontWeight(.bold)
                 .padding([.bottom], 100)
                 .foregroundColor(.white)
-            SliderQuestionnaire()
-            SliderQuestionnaire()
-            SliderQuestionnaire()
+            SliderQuestionnaire(questionIcon: Image(systemName: "drop.circle"), question: "How many caffeinated drinks did you consume today?")
+            SliderQuestionnaire(questionIcon: Image(systemName: "zzz"), question: "How sleepy do you feel right now?")
+            SliderQuestionnaire(questionIcon: Image(systemName: "eyes"), question: "The cake is a lie")
             Spacer()
             
         }
