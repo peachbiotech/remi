@@ -42,7 +42,12 @@ struct SleepSummaryPanel: View {
                 Text("Sleep Goal").font(.headline).multilineTextAlignment(.leading).foregroundColor(ColorManager.dashboardTextColor)
                 Spacer()
                 HStack {
-                    Text("\(hours)h\(minutes)m / 8h").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    if sleepDuration != -1 {
+                        Text("\(hours)h\(minutes)m / 8h").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
+                    else {
+                        Text("-- h -- m").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
                     Spacer()
                     Image(systemName: "bed.double.fill")
                         .resizable()
@@ -62,6 +67,6 @@ struct SleepSummaryPanel: View {
 
 struct SleepSummaryPanel_Previews: PreviewProvider {
     static var previews: some View {
-        SleepSummaryPanel(sleepDuration: 500)
+        SleepSummaryPanel(sleepDuration: -1)
     }
 }

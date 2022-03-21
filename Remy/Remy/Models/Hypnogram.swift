@@ -23,21 +23,6 @@ extension Hypnogram {
                 stage: .WAKE, begin: 0
             ),
             HypnogramSegment(
-                stage: .NREM1, begin: 10
-            ),
-            HypnogramSegment(
-                stage: .NREM2, begin: 20
-            ),
-            HypnogramSegment(
-                stage: .NREM3, begin: 30
-            ),
-            HypnogramSegment(
-                stage: .REM, begin: 40
-            ),
-            HypnogramSegment(
-                stage: .NREM1, begin: 50
-            ),
-            HypnogramSegment(
                 stage: .WAKE, begin: 60
             ),
             HypnogramSegment(

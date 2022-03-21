@@ -19,14 +19,16 @@ class SessionStore: ObservableObject {
             let (data, _) = try await urlSession.data(from: url)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .secondsSince1970
+            // grab sessions, SleepSession is instantiated with array of SleepSnapShots
             let session = try decoder.decode([SleepSnapShot].self, from: data)
             let sleepSession = SleepSession(session: session)
             
             let calendar = Calendar.current
-            let components = calendar.dateComponents([.day], from: sleepSession.session[0].time)
-            let dayKey = String(components.day!)
+            let components = calendar.dateComponents([.year, .month, .day], from: sleepSession.session[sleepSession.session.count-1].time)
             
-            sleepSessions[dayKey] = sleepSession
+            let dateKey = String(components.year!) + String(components.month!) + String(components.day!)
+                
+            sleepSessions[dateKey] = sleepSession
         }
         catch {
             // Error handling in case the data couldn't be loaded

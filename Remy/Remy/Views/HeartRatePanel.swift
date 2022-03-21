@@ -21,7 +21,12 @@ struct HeartRatePanel: View {
                 Text("Avg. Heart Rate").font(.headline).multilineTextAlignment(.leading).foregroundColor(ColorManager.dashboardTextColor)
                 Spacer()
                 HStack {
-                    Text("\(avgHeartRate) BPM").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    if avgHeartRate != -1 {
+                        Text("\(avgHeartRate) BPM").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
+                    else {
+                        Text("--  BPM").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
                     Spacer()
                     Image(systemName: "heart.fill")
                         .resizable()
@@ -40,6 +45,6 @@ struct HeartRatePanel: View {
 
 struct HeartRatePanel_Previews: PreviewProvider {
     static var previews: some View {
-        HeartRatePanel(avgHeartRate: 50)
+        HeartRatePanel(avgHeartRate: -1)
     }
 }

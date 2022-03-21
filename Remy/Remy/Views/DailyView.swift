@@ -17,8 +17,8 @@ struct DailyView: View {
     
     var day: String {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: date)
-        return String(components.day!)
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(components.year!) + String(components.month!) + String(components.day!)
     }
     
     private func retrieveSession() {
@@ -59,7 +59,15 @@ struct DailyView: View {
                     Spacer()
                 }
                 else {
-                    Text("No sleep data available for current date" + " 😪").padding(.top, 50.0)
+                    Text("No sleep data available for current date" + " 😪")
+                    SleepSummaryPanel(sleepDuration: -1)
+                        .padding(.bottom, 5.0)
+                    HypnogramView(hypnogram: Hypnogram.sampleData[0])
+                    HStack {
+                        HeartRatePanel(avgHeartRate: -1)
+                        Spacer()
+                        O2Panel(avgO2Sat: -1)
+                    }
                 }
             }
             .padding()

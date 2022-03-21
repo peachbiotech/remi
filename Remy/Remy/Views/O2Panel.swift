@@ -21,7 +21,12 @@ struct O2Panel: View {
                 Text("Avg. O2\nSaturation").font(.headline).multilineTextAlignment(.leading).foregroundColor(ColorManager.dashboardTextColor)
                 Spacer()
                 HStack {
-                    Text("\(avgO2Sat)%").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    if avgO2Sat != -1 {
+                        Text("\(avgO2Sat)%").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
+                    else {
+                        Text("-- %").font(.title).foregroundColor(ColorManager.dashboardTextColor)
+                    }
                     Spacer()
                     Image(systemName: "lungs.fill")
                         .resizable()
@@ -40,6 +45,6 @@ struct O2Panel: View {
 
 struct O2Panel_Previews: PreviewProvider {
     static var previews: some View {
-        O2Panel(avgO2Sat: 98)
+        O2Panel(avgO2Sat: -1)
     }
 }
