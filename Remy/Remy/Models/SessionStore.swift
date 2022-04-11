@@ -13,7 +13,7 @@ class SessionStore: ObservableObject {
     
     @Published var sleepSessions: [String: SleepSession] = [:]
     
-    func load() async {
+    func loadfromDB() async {
         let url = URL(string: "https://dl.dropbox.com/s/tkxiv4dbstniqld/SampleSleepSession.json?dl=1")!
         let urlSession = URLSession.shared
         do {
@@ -31,6 +31,22 @@ class SessionStore: ObservableObject {
             // Error handling in case the data couldn't be loaded
             // For now, only display the error on the console
             debugPrint("Error loading \(url): \(String(describing: error))")
+        }
+    }
+    
+    func load(date: Date) async {
+
+        do {
+            let dateKey = Helpers.fetchDateStringFromDate(date: date)
+            if let data = UserDefaults.standard.object(forKey: dateKey) as? Data {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                // grab sessions, SleepSession is instantiated with array of SleepSnapShots
+                if let session = try? decoder.decode([SleepSnapShot].self, from: data) {
+                    let sleepSession = SleepSession(session: session)
+                    sleepSessions[dateKey] = sleepSession
+                }
+            }
         }
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 import CoreBluetooth
 import SwiftUI
-import Combine
 
 struct Peripheral: Identifiable, Comparable, Equatable {
     // CBPeripheral wrapper struct
@@ -55,6 +54,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var readRate: Int = 0
     
     private var snapShots: [SleepSnapShot] = []
+    private var imuDataBuffer: [IMUData] = []
     
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
@@ -124,16 +124,19 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         }
     }
     
-    func write(snapShots: [SleepSnapShot]) async {
+    func write(snapShots: [SleepSnapShot], imuData: [IMUData], imuKey: String) async {
         print("received data")
         do {
             let encoder = JSONEncoder()
             let encodedSnapShot = try encoder.encode(snapShots)
+            let encodedIMUData = try encoder.encode(imuData)
             let dateKey = Helpers.fetchDateStringFromDate(date: snapShots[snapShots.count-1].time)
             if UserDefaults.standard.object(forKey: dateKey) != nil {
                 UserDefaults.standard.removeObject(forKey: dateKey)
             }
+        
             UserDefaults.standard.set(encodedSnapShot, forKey: dateKey)
+            UserDefaults.standard.set(encodedIMUData, forKey: imuKey)
             print("wrote new sleepsnapshots for date: " + dateKey)
         }
         catch {
@@ -478,8 +481,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     func handleBatteryVoltageRead(data: String) {
         let voltage = Float(data) ?? 0
         print("battery voltage: \(voltage)")
-        let batteryVoltageMax = Float(4.0)
-        let batteryVoltageMin = Float(3.2)
+        let batteryVoltageMax = Float(3.7)
+        let batteryVoltageMin = Float(2.5)
         
         var percentage = Int(100 * (voltage - batteryVoltageMin) / (batteryVoltageMax - batteryVoltageMin))
         print("battery 0: \((voltage - batteryVoltageMin))")
@@ -656,13 +659,18 @@ extension BLEManager: CBPeripheralDelegate {
                 handleGyroscopeData(data: dataString)
             }
         }
+        if hasImu {
+            imuDataBuffer.append(IMUData(accelx: self.accelerometerData.x, accely: self.accelerometerData.y, accelz: self.accelerometerData.z, gyrox: self.gyroscopeData.x, gyroy: self.accelerometerData.y, gyroz: self.gyroscopeData.z))
+            hasImu = false
+        }
         
-        if newO2Data && newHeartRateData {
-            snapShots.append(SleepSnapShot(time: Date(), heartRate: heartRate, o2Sat: o2Level, sleepStage: SleepStageType.NREM1))
+        if newO2Data && newHeartRateData && imuDataBuffer.count == 100{
+            let imuKey = UUID().uuidString
+            snapShots.append(SleepSnapShot(time: Date(), heartRate: heartRate, o2Sat: o2Level, sleepStage: SleepStageType.NREM1, imuKey: imuKey))
             newO2Data = false
             newHeartRateData = false
             Task {
-                await write(snapShots: snapShots)
+                await write(snapShots: snapShots, imuData: imuDataBuffer, imuKey: imuKey)
             }
         }
     }

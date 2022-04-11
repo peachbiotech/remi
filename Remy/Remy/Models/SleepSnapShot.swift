@@ -12,11 +12,13 @@ struct SleepSnapShot: Codable {
     var heartRate: Int
     var o2Sat: Int
     var sleepStage: SleepStageType
+    var imuKey: String = ""
     
-    init(time: Date, heartRate: Int, o2Sat: Int, sleepStage: SleepStageType) {
+    init(time: Date, heartRate: Int, o2Sat: Int, sleepStage: SleepStageType, imuKey: String = "") {
         self.time = time
         self.heartRate = heartRate
         self.o2Sat = o2Sat
         self.sleepStage = sleepStage
+        self.imuKey = imuKey
     }
 }

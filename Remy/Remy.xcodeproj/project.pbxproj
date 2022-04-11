@@ -16,6 +16,7 @@
 		B83BC62A2803C442006E1230 /* MyDeviceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83BC6292803C442006E1230 /* MyDeviceDetailView.swift */; };
 		B83BC62C2803D066006E1230 /* CreditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83BC62B2803D066006E1230 /* CreditView.swift */; };
 		B83BC62E2803D738006E1230 /* LiveDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83BC62D2803D738006E1230 /* LiveDebugView.swift */; };
+		B83BC63028045D84006E1230 /* IMUData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83BC62F28045D84006E1230 /* IMUData.swift */; };
 		B848015B2746DBDD00B66439 /* RemyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B848015A2746DBDD00B66439 /* RemyApp.swift */; };
 		B848015F2746DBDE00B66439 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B848015E2746DBDE00B66439 /* Assets.xcassets */; };
 		B84801622746DBDE00B66439 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B84801612746DBDE00B66439 /* Preview Assets.xcassets */; };
@@ -84,6 +85,7 @@
 		B83BC6292803C442006E1230 /* MyDeviceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDeviceDetailView.swift; sourceTree = "<group>"; };
 		B83BC62B2803D066006E1230 /* CreditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditView.swift; sourceTree = "<group>"; };
 		B83BC62D2803D738006E1230 /* LiveDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveDebugView.swift; sourceTree = "<group>"; };
+		B83BC62F28045D84006E1230 /* IMUData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMUData.swift; sourceTree = "<group>"; };
 		B84801572746DBDD00B66439 /* Remy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Remy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848015A2746DBDD00B66439 /* RemyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemyApp.swift; sourceTree = "<group>"; };
 		B848015E2746DBDE00B66439 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				B84A0F4227A19B2E007D2DDE /* ApplicationState.swift */,
 				B822106D27BADEEF00055A58 /* EEGQuality.swift */,
 				B8C4C46027FDF79600DE028F /* Helpers.swift */,
+				B83BC62F28045D84006E1230 /* IMUData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8D44A4F277EE29F00EA7A2A /* O2Panel.swift in Sources */,
+				B83BC63028045D84006E1230 /* IMUData.swift in Sources */,
 				B8C4171127BBED8700B19C3B /* O2QualityIndicator.swift in Sources */,
 				B8D44A51277EE2AD00EA7A2A /* HeartRatePanel.swift in Sources */,
 				B8D44A5F277EE3DF00EA7A2A /* AboutView.swift in Sources */,

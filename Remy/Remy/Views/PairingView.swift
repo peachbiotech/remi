@@ -29,7 +29,7 @@ struct PairingView: View {
                                 Spacer()
                                 Button("Connect") {
                                     self.bleManager.connect(peripheral: peripheral.peripheral)
-                                    self.bleManager.setReadRate(rate: "500")
+                                    self.bleManager.setReadRate(rate: "5000")
                                 }.foregroundColor(.blue)
                             }
                         }

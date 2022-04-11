@@ -42,9 +42,10 @@ struct DailyView: View {
                     .padding(.vertical, 5.0)
                     .onChange(of: date, perform: { value in
                         Task {
-                            await self.sessionStore.load()
+                            await self.sessionStore.load(date: date)
+                            retrieveSession()
                         }
-                        retrieveSession()
+                        
                     })
                 if hasSession {
                     SleepSummaryPanel(sleepDuration: currentSession.sleepDuration)
@@ -74,11 +75,11 @@ struct DailyView: View {
             .navigationTitle("Sleep Summary")
         }
         .task {
-            await self.sessionStore.load()
+            await self.sessionStore.load(date: date)
             retrieveSession()
         }
         .refreshable {
-            await self.sessionStore.load()
+            await self.sessionStore.load(date: date)
             retrieveSession()
         }
     }

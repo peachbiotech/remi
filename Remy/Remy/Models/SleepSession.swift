@@ -17,11 +17,18 @@ struct SleepSession: Codable {
             let t0 = session[0].time
             
             for (i, snapShot) in session.enumerated() {
-                let dt = SleepSession.timeDifferenceMins(startTime: t0, endTime: snapShot.time)
+                print(snapShot.time)
+                print(snapShot.heartRate)
+                print(snapShot.o2Sat)
+                print(snapShot.sleepStage)
+                let dt = SleepSession.timeDifferenceSecs(startTime: t0, endTime: snapShot.time)
                 print("\(dt)")
-                let segment = HypnogramSegment(stage: snapShot.sleepStage, begin: dt)
+                var segment: HypnogramSegment
                 if (i == session.count-1) {
-                    assert(snapShot.sleepStage == SleepStageType.END, "Hypnogram should end with END")
+                    segment = HypnogramSegment(stage: SleepStageType.END, begin: dt)
+                }
+                else {
+                    segment = HypnogramSegment(stage: snapShot.sleepStage, begin: dt)
                 }
                 segments.append(segment)
             }
@@ -33,7 +40,7 @@ struct SleepSession: Codable {
         get {
             let startTime = session[0].time
             let endTime = session.last!.time
-            return SleepSession.timeDifferenceMins(startTime: startTime, endTime: endTime)
+            return Int(SleepSession.timeDifferenceSecs(startTime: startTime, endTime: endTime) / 60)
         }
     }
     
@@ -57,12 +64,12 @@ struct SleepSession: Codable {
         }
     }
     
-    private static func timeDifferenceMins(startTime: Date, endTime: Date) -> Int {
-        let startInMinutes = startTime.timeIntervalSince1970 / 60.0
-        let endInMinutes = endTime.timeIntervalSince1970 / 60.0
-        print("start: \(startInMinutes)")
-        print("end: \(endInMinutes)")
-        return Int(endInMinutes - startInMinutes)
+    private static func timeDifferenceSecs(startTime: Date, endTime: Date) -> Int { // TODO: This is in milisecs not secs
+        let startInSecs = startTime.timeIntervalSince1970
+        let endInSecs = endTime.timeIntervalSince1970
+        print("start: \(startInSecs)")
+        print("end: \(endInSecs)")
+        return Int(endInSecs - startInSecs)
     }
     
     init() {
