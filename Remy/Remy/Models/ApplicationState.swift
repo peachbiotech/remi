@@ -13,7 +13,7 @@ struct ApplicationState: Codable {
 
 enum ApplicationStateType: Int,Codable {
     case WELCOME = 0
-    case PAIRING
+    case VIEWCURRENT
     case DAILY
     case TRENDS
     case ABOUT

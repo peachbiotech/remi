@@ -10,7 +10,7 @@ import SwiftUI
 struct DailyView: View {
     
     @State private var date = Date()
-    @StateObject var sessionStore = SessionStore()
+    @ObservedObject var sessionStore: SessionStore
     @State private var hasSession = false
     @State private var currentSession = SleepSession()
     let saveAction: ()->Void
@@ -87,7 +87,7 @@ struct DailyView: View {
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DailyView(saveAction: {})
+            DailyView(sessionStore: SessionStore(), saveAction: {})
         }
     }
 }

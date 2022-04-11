@@ -13,12 +13,12 @@ struct HeartRateQualityIndicator: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            RoundedRectangle(cornerRadius: 12, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
             HStack {
                 Text("Heart Rate: ").font(.title3)
                     .multilineTextAlignment(.leading).foregroundColor(.white)
                 Spacer()
-                if hasHeart {
+                if hasHeart && heartRate != -1{
                     Text("\(heartRate) bpm").font(.headline).foregroundColor(.white)
                     Image(systemName: "heart.fill").resizable().scaledToFit().frame(width: 20.0).foregroundColor(.red)
                 }

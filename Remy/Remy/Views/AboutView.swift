@@ -9,18 +9,36 @@ import SwiftUI
 
 struct AboutView: View {
     
+    @ObservedObject var bleManager: BLEManager
+    
     var body: some View {
         List {
             Section(header: Text("My Device")) {
-                Label("Pairing", systemImage: "timer")
-                    .font(.headline)
-                    .foregroundColor(.accentColor)
-                HStack {
-                    Label("Placeholder 2", systemImage: "clock")
+                switch bleManager.state {
+                case .connected:
+                    HStack {
+                        NavigationLink(destination: MyDeviceDetailView(bleManager: bleManager)) {
+                             HStack {
+                                 Text(bleManager.connectedPeripheral?.name ?? "unknown device")
+                                 Spacer()
+                                 Text("Connected").foregroundColor(.gray)
+                             }
+                        }
+                    }
+                default:
+                    NavigationLink(destination: PairingView(bleManager: bleManager)) {
+                        Label("Pair Device", systemImage: "circle.grid.cross")
+                    }
                 }
-                .accessibilityElement(children: .combine)
-                HStack {
-                    Label("Placeholder 3", systemImage: "paintpalette")
+            }
+            Section() {
+                NavigationLink(destination: LiveDebugView(bleManager: bleManager)) {
+                    Text("Debug")
+                }
+                NavigationLink(destination: CreditView()) {
+                     HStack {
+                         Text("Acknowledgements")
+                     }
                 }
             }
         }
@@ -30,8 +48,13 @@ struct AboutView: View {
 
 struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            AboutView()
+        Group {
+            NavigationView {
+                AboutView(bleManager: BLEManager())
+            }
+            NavigationView {
+                AboutView(bleManager: BLEManager())
+            }
         }
     }
 }

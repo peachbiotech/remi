@@ -12,12 +12,12 @@ struct O2QualityIndicator: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            RoundedRectangle(cornerRadius: 12, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
             HStack {
                 Text("Oxygen: ").font(.title3)
                     .multilineTextAlignment(.leading).foregroundColor(.white)
                 Spacer()
-                if hasO2 {
+                if hasO2 && o2Level != -1 {
                     HStack {
                         Text("\(o2Level)%").font(.headline).foregroundColor(.white)
                         Image(systemName: "lungs.fill").resizable().scaledToFit().frame(width: 30.0).foregroundColor(.green)

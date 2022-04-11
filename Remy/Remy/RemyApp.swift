@@ -9,7 +9,14 @@ import SwiftUI
 
 @main
 struct RemyApp: App {
-    @StateObject var bleManager = BLEManager()
+    
+    init() {
+        _sessionStore = StateObject(wrappedValue: SessionStore())
+        _bleManager = StateObject(wrappedValue: BLEManager())
+    }
+    
+    @StateObject var sessionStore: SessionStore
+    @StateObject var bleManager: BLEManager
     @State private var appState: ApplicationState = ApplicationState()
     @State private var isRecording: Bool = false
     let persistenceController = PersistenceController.shared
@@ -20,19 +27,14 @@ struct RemyApp: App {
                 switch appState.state {
                 case ApplicationStateType.WELCOME:
                     WelcomeView()
-                case ApplicationStateType.PAIRING:
-                    if !isRecording {
-                        PairingView(bleManager: bleManager, isRecording: $isRecording)
-                    }
-                    else {
-                        PairedInfoView(bleManager: bleManager, isRecording: $isRecording)
-                    }
+                case ApplicationStateType.VIEWCURRENT:
+                    PairedInfoView(bleManager: bleManager)
                 case ApplicationStateType.DAILY:
-                    DailyView(saveAction: {})
+                    DailyView(sessionStore: sessionStore, saveAction: {})
                 case ApplicationStateType.TRENDS:
                     TrendsView()
                 case ApplicationStateType.ABOUT:
-                    AboutView()
+                    AboutView(bleManager: bleManager)
                 }
             }
             .toolbar {

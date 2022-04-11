@@ -8,7 +8,6 @@ import SwiftUI
 
 struct PairingView: View {
     @ObservedObject var bleManager: BLEManager
-    @Binding var isRecording: Bool
     
     func shortListPeripherals(p: [Peripheral]) -> [Peripheral] {
         
@@ -18,53 +17,39 @@ struct PairingView: View {
     }
     
     var body: some View {
-        VStack {
-            Text("Bedtime")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding([.bottom], 100)
-                .foregroundColor(.white)
-            HStack {
-                Text("Discovering your sleep tracker   ").foregroundColor(.white).font(.headline)
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-            }
 
-            List {
-                Section(header: BLEListHeader()) {
-                    if bleManager.isSwitchedOn {
-                        if bleManager.peripherals.count != 0 {
-                            ForEach (shortListPeripherals(p: bleManager.peripherals)) { peripheral in
-                                NavigationLink(destination: PairedInfoView(bleManager: bleManager, isRecording: $isRecording).onAppear(perform: {
-                                    print("connect")
+        List {
+            Section(header: BLEListHeader()) {
+                if bleManager.isSwitchedOn {
+                    if bleManager.peripherals.count != 0 {
+                        ForEach (shortListPeripherals(p: bleManager.peripherals)) { peripheral in
+
+                            HStack {
+                                Text(peripheral.name)
+                                Spacer()
+                                Button("Connect") {
                                     self.bleManager.connect(peripheral: peripheral.peripheral)
                                     self.bleManager.setReadRate(rate: "500")
-                                    })
-                                ) {
-                                    HStack {
-                                        Text(peripheral.name).font(.headline)
-                                        Spacer()
-                                        Text("Connect")
-                                    }.foregroundColor(.blue)
-                                }
+                                }.foregroundColor(.blue)
                             }
-                        }
-                        else {
-                            Text("No devices detected").foregroundColor(.gray)
                         }
                     }
                     else {
-                        Text("Please turn on Bluetooth")
-                            .foregroundColor(.orange)
+                        Text("No devices detected").foregroundColor(.gray)
                     }
                 }
-                .listRowBackground(ColorManager.spaceGrey)
+                else {
+                    Text("Please turn on Bluetooth")
+                        .foregroundColor(.orange)
+                }
             }
-            .listStyle(.insetGrouped)
-            .padding()
         }
-        .background(ColorManager.midNightBlue)
+                
+            //.listRowBackground(ColorManager.spaceGrey)
+        .listStyle(.insetGrouped)
+        //.background(ColorManager.midNightBlue)
         .onAppear {
-            UITableView.appearance().backgroundColor = UIColor(ColorManager.midNightBlue)
+            //UITableView.appearance().backgroundColor = UIColor(ColorManager.midNightBlue)
             print("Pairing start")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.bleManager.startScanning()
@@ -78,19 +63,24 @@ struct PairingView: View {
         .refreshable {
             self.bleManager.startScanning()
         }
+        .navigationBarTitle("Pairing", displayMode: .inline)
     }
 }
 
 struct BLEListHeader: View {
     var body: some View {
-        Text("Devices").foregroundColor(.gray)
+        HStack {
+            Text("Devices   ").foregroundColor(.gray)
+            ProgressView()
+        }
+            
     }
 }
 
 struct PairingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PairingView(bleManager: BLEManager(), isRecording: .constant(false))
+            PairingView(bleManager: BLEManager())
         }
     }
 }

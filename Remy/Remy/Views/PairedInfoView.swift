@@ -12,74 +12,93 @@ struct PairedInfoView: View {
     @ObservedObject var bleManager: BLEManager
     
     @State private var isPresentingQuestionnaire = false
-    @Binding var isRecording: Bool
+    
+    var batteryPercentage: Int {
+        switch bleManager.state {
+        case .connected:
+            return bleManager.batteryPercentage
+        default:
+            break
+        }
+
+        return -1
+    }
+    
+    var eegQuality: EEGQuality {
+        switch bleManager.state {
+        case .connected:
+            return bleManager.eegQuality
+        default:
+            break
+        }
+
+        return EEGQuality.NOSIGNAL
+    }
+    
+    var heartRate: Int{
+        switch bleManager.state {
+        case .connected:
+            return bleManager.heartRate
+        default:
+            break
+        }
+
+        return -1
+    }
+    
+    var o2Level: Int {
+        switch bleManager.state {
+        case .connected:
+            return bleManager.o2Level
+        default:
+            break
+        }
+
+        return -1
+    }
     
     var body: some View {
+
         VStack {
-            if !isRecording {
-                Text("Fitcheck 😎")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding([.bottom], 100)
-                    .foregroundColor(.white)
-                Text("Wear the tracker snugly against your head").foregroundColor(.white).font(.title2).multilineTextAlignment(.center).padding()
-                HStack {
-                    Text("Verifying sensors ").foregroundColor(.white).font(.title3)
-                    if !bleManager.isReady {
-                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                    }
-                    else {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                    }
-                }
-            }
-            else {
-                Text("Setup complete")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding([.bottom], 100)
-                    .foregroundColor(.white)
-                Text("Sweet dreams 🤗").foregroundColor(.white).font(.title2).padding()
+            
+            switch bleManager.state {
+            case .connected:
+                Text(" ").padding()
+            default:
+                Text("No device connected 🫠").padding()
             }
             
+            BatteryLevelIndicator(batteryLevel: batteryPercentage).foregroundColor(.white).padding(.horizontal)
+            EEGQualityIndicator(quality: eegQuality).foregroundColor(.white).padding(.horizontal)
+            HeartRateQualityIndicator(hasHeart: bleManager.hasHeart, heartRate: heartRate).foregroundColor(.white).padding(.horizontal)
+            O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: o2Level).foregroundColor(.white).padding(.horizontal)
             Spacer()
-            VStack {
-                BatteryLevelIndicator(batteryLevel: bleManager.batteryPercentage).foregroundColor(.white).padding(.horizontal)
-                EEGQualityIndicator(quality: bleManager.eegQuality).foregroundColor(.white).padding(.horizontal)
-                HeartRateQualityIndicator(hasHeart: bleManager.hasHeart, heartRate: bleManager.heartRate).foregroundColor(.white).padding(.horizontal)
-                O2QualityIndicator(hasO2: bleManager.hasO2, o2Level: bleManager.o2Level).foregroundColor(.white).padding(.horizontal)
-            }
-            Spacer()
-            if bleManager.isReady && !isRecording{
-                Button(action: {isPresentingQuestionnaire = true}) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .fill(.blue)
-                        .frame(width: 170, height: 50)
-                        Text("continue").foregroundColor(.white)
-                    }
+        }
+        .navigationTitle("Session")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: {
+                    isPresentingQuestionnaire = true
+                }) {
+                    Image(systemName: "note.text")
                 }
             }
-            Spacer()
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ColorManager.midNightBlue)
+
         .sheet(isPresented: $isPresentingQuestionnaire) {
             NavigationView {
                 PreSleepQuestionnaireView()
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Skip") {
+                            Button("Cancel") {
                                 isPresentingQuestionnaire = false
-                                isRecording = true
                                 // spawn background process for collecting data, save survey results
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
-                            Button("Continue") {
+                            Button("Done") {
                                 isPresentingQuestionnaire = false
-                                isRecording = true
                             }
                         }
                     }
@@ -91,6 +110,6 @@ struct PairedInfoView: View {
 
 struct PairedInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PairedInfoView(bleManager: BLEManager(), isRecording: .constant(false))
+        PairedInfoView(bleManager: BLEManager())
     }
 }

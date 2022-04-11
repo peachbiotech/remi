@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 class SessionStore: ObservableObject {
+    
     @Published var sleepSessions: [String: SleepSession] = [:]
     
     func load() async {
@@ -23,11 +24,7 @@ class SessionStore: ObservableObject {
             let session = try decoder.decode([SleepSnapShot].self, from: data)
             let sleepSession = SleepSession(session: session)
             
-            let calendar = Calendar.current
-            let components = calendar.dateComponents([.year, .month, .day], from: sleepSession.session[sleepSession.session.count-1].time)
-            
-            let dateKey = String(components.year!) + String(components.month!) + String(components.day!)
-                
+            let dateKey = Helpers.fetchDateStringFromDate(date: sleepSession.session[sleepSession.session.count-1].time)
             sleepSessions[dateKey] = sleepSession
         }
         catch {

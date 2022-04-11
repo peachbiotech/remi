@@ -30,14 +30,16 @@ struct BatteryLevelIndicator: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            RoundedRectangle(cornerRadius: 12, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
             HStack {
                 Text("Battery: ").font(.title3)
                     .multilineTextAlignment(.leading).foregroundColor(.white)
                 Spacer()
                 HStack {
                     HStack {
-                        Text(" \(batteryLevel)%").font(.headline).foregroundColor(.white)
+                        if batteryLevel != -1{
+                            Text(" \(batteryLevel)%").font(.headline).foregroundColor(.white)
+                        }
                         batteryIcon.resizable().scaledToFit().frame(width: 30.0).foregroundColor(.white)
                     }
                     if batteryLevel < 20 {

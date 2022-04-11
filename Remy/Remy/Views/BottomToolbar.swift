@@ -26,8 +26,8 @@ struct BottomToolbar: ToolbarContent {
                     return ColorManager.bottomToolbarTextInactiveColor
                 }
             
-            case ApplicationStateType.PAIRING:
-                if button == "Pairing" {
+            case ApplicationStateType.VIEWCURRENT:
+                if button == "CurrentView" {
                     return ColorManager.bottomToolbarTextColor
                 } else {
                     return ColorManager.bottomToolbarTextInactiveColor
@@ -70,14 +70,14 @@ struct BottomToolbar: ToolbarContent {
             }
             Spacer()
             Button(action: {
-                appState.state = ApplicationStateType.PAIRING
-                print("Record Sleep")
+                appState.state = ApplicationStateType.VIEWCURRENT
+                print("View current session status")
             }) {
                 VStack {
                     Image(systemName: "record.circle")
-                    Text("Record").font(.caption)
+                    Text("Session").font(.caption)
                 }
-                .tint(getButtonColor(button: "Pairing"))
+                .tint(getButtonColor(button: "CurrentView"))
             }
             Spacer()
             Button(action: {

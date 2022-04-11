@@ -7,6 +7,8 @@
 
 import Foundation
 import CoreBluetooth
+import SwiftUI
+import Combine
 
 struct Peripheral: Identifiable, Comparable, Equatable {
     // CBPeripheral wrapper struct
@@ -25,11 +27,12 @@ struct Peripheral: Identifiable, Comparable, Equatable {
 }
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
+    
     @Published var isSwitchedOn = false
     @Published var peripherals = [Peripheral]()
     @Published var connectedPeripheral: CBPeripheral?
 
-    @Published var eegQuality: EEGQuality = EEGQuality.GOOD
+    @Published var eegQuality: EEGQuality = EEGQuality.NOSIGNAL
     @Published var heartRate = 0
     @Published var o2Level = 0
     @Published var batteryPercentage: Int = 0
@@ -37,16 +40,21 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var gyroscopeData: (x: Float, y: Float, z: Float) = (0, 0, 0)
     
     @Published var hasEEG: Bool = true // Set to true for debug purposes
-    @Published var hasHeart: Bool = true
-    @Published var hasO2: Bool = true
+    @Published var hasHeart: Bool = false
+    @Published var hasO2: Bool = false
     @Published var hasBattery: Bool = true
     @Published var hasImu: Bool = true
     
     @Published var isReady: Bool = true
     private var heartRateNotReadyCount: Int = 0
     private var o2NotReadyCount: Int = 0
+    
+    private var newHeartRateData: Bool = false
+    private var newO2Data: Bool = false
 
     @Published var readRate: Int = 0
+    
+    private var snapShots: [SleepSnapShot] = []
     
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
@@ -87,7 +95,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     var central: CBCentralManager!
     
     // State machine
-    var state = State.poweredOff
+    @Published var state = State.poweredOff
     enum State {
         case poweredOff
         case restoringConnectingPeripheral(CBPeripheral)
@@ -116,13 +124,29 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         }
     }
     
+    func write(snapShots: [SleepSnapShot]) async {
+        print("received data")
+        do {
+            let encoder = JSONEncoder()
+            let encodedSnapShot = try encoder.encode(snapShots)
+            let dateKey = Helpers.fetchDateStringFromDate(date: snapShots[snapShots.count-1].time)
+            if UserDefaults.standard.object(forKey: dateKey) != nil {
+                UserDefaults.standard.removeObject(forKey: dateKey)
+            }
+            UserDefaults.standard.set(encodedSnapShot, forKey: dateKey)
+            print("wrote new sleepsnapshots for date: " + dateKey)
+        }
+        catch {
+            print("SleepSession encoding failed")
+        }
+    }
+    
     private let restoreIdKey = "RemyCentral"
     private let peripheralIdDefaultsKey = "RemyPeripheral"
     
     override init() {
         serviceUUIDS = [heartRateO2ServiceUUID, batteryServiceUUID, imuServiceUUID]
         super.init()
-        
         let options = [CBCentralManagerOptionRestoreIdentifierKey: restoreIdKey]
         central = CBCentralManager(delegate: self, queue: nil, options: options)
         central.delegate = self
@@ -181,15 +205,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         state = .connecting(peripheral, Countdown(seconds: 10, closure: {}))
     }
     
-    func disconnect(forget: Bool = false) {
-        
-        if let peripheral = state.peripheral {
-            central.cancelPeripheralConnection(peripheral)
-        }
-        if forget {
-            UserDefaults.standard.removeObject(forKey: peripheralIdDefaultsKey)
-            UserDefaults.standard.synchronize()
-        }
+    func disconnectHelper() {
         state = .disconnected
         self.o2Level = 0
         self.heartRate = 0
@@ -202,6 +218,21 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         self.hasImu = false
         self.isReady = false
         self.readRate = 0
+        self.newHeartRateData = false
+        self.newO2Data = false
+        self.snapShots = []
+        print("disconnected from peripheral")
+    }
+    
+    func disconnect(forget: Bool = false) {
+        
+        if let peripheral = state.peripheral {
+            central.cancelPeripheralConnection(peripheral)
+        }
+        if forget {
+            UserDefaults.standard.removeObject(forKey: peripheralIdDefaultsKey)
+            UserDefaults.standard.synchronize()
+        }
     }
     
     func discoverServices(peripheral: CBPeripheral) {
@@ -287,21 +318,23 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         // We have a peripheral supplied, but we can't touch it until
         // `central.state == .poweredOn`, so we store it in the state
         // machine enum for later use.
-        if let peripheral = peripherals.first {
-            switch peripheral.state {
+        let peripheral = peripherals.first
+        if peripheral != nil {
+            switch peripheral!.state {
             case .connecting: // I've only seen this happen when
                 // re-launching attached to Xcode.
                 state =
-                    .restoringConnectingPeripheral(peripheral)
+                    .restoringConnectingPeripheral(peripheral!)
 
             case .connected: // Store for connection / requesting
                 // notifications when BT starts.
                 state =
-                    .restoringConnectedPeripheral(peripheral)
+                    .restoringConnectedPeripheral(peripheral!)
             default: break
             }
         }
-        
+        self.connectedPeripheral = peripheral
+        self.connectedPeripheral?.delegate = self
         print("restored app")
     }
     
@@ -342,6 +375,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
                 state = .disconnected
             }
         }
+        disconnectHelper()
         print("successfully disconnected from peripheral device")
     }
     
@@ -358,7 +392,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         else {
             peripheralName = "Unknown"
         }
-       
+        
         if peripheralName.contains("SleepTracker") {
             let newPeripheral = Peripheral(id: peripherals.count,
                                            name: peripheralName,
@@ -378,6 +412,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             print("Cannot scan, BT is not powered on")
             return
         }
+        
+        switch self.state {
+        case .connected:
+            return
+        default:
+            break
+        }
+
         // Scan!
         central.scanForPeripherals(withServices: [heartRateO2ServiceUUID], options: nil)
         state = .scanning(Countdown(seconds: 10, closure: {
@@ -399,6 +441,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         if temp > 0 {
             self.heartRate = temp
             self.hasHeart = true
+            self.newHeartRateData = true
             heartRateNotReadyCount = 0
         }
         else {
@@ -418,6 +461,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         if temp > 50 {
             self.o2Level = temp
             self.hasO2 = true
+            self.newO2Data = true
             o2NotReadyCount = 0
         }
         else {
@@ -448,6 +492,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     }
 
     func handleAccelerometerData(data: String) {
+        print("accelerometer: \(data)")
         let dataArray = data.components(separatedBy: "\t")
         if dataArray.count == 3 {
             let x = Float(dataArray[0]) ?? 0
@@ -459,6 +504,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     }
 
     func handleGyroscopeData(data: String) {
+        print("gyroscope: \(data)")
         let dataArray = data.components(separatedBy: "\t")
         if dataArray.count == 3 {
             let x = Float(dataArray[0]) ?? 0
@@ -473,6 +519,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             readBatteryVoltage(peripheral: self.connectedPeripheral!)
         }
         self.isReady = self.hasEEG && self.hasHeart && self.hasO2// TODO: calibrate battery && self.hasBattery
+        print(self.state)
     }
     
     func getReadRate() {
@@ -541,10 +588,12 @@ extension BLEManager: CBPeripheralDelegate {
             else if characteristic.uuid == accelerometerCharacteristicUUID {
                 print("found accelerometer characteristic")
                 accelerometerCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
             }
             else if characteristic.uuid == gyroscopeCharacteristicUUID {
                 print("found gyroscope characteristic")
                 gyroscopeCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
             }
         }
         
@@ -605,6 +654,15 @@ extension BLEManager: CBPeripheralDelegate {
             }
             if let dataString = NSString.init(data: gyroscopeData, encoding: String.Encoding.utf8.rawValue) as String? {
                 handleGyroscopeData(data: dataString)
+            }
+        }
+        
+        if newO2Data && newHeartRateData {
+            snapShots.append(SleepSnapShot(time: Date(), heartRate: heartRate, o2Sat: o2Level, sleepStage: SleepStageType.NREM1))
+            newO2Data = false
+            newHeartRateData = false
+            Task {
+                await write(snapShots: snapShots)
             }
         }
     }

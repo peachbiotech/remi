@@ -12,7 +12,7 @@ struct EEGQualityIndicator: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 9, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
+            RoundedRectangle(cornerRadius: 12, style: .continuous).fill(ColorManager.spaceGrey).frame(maxWidth: .infinity, maxHeight: 70)
             HStack {
                 Text("EEG:").font(.title3)
                     .multilineTextAlignment(.leading).foregroundColor(.white)

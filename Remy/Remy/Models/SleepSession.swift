@@ -66,8 +66,7 @@ struct SleepSession: Codable {
     }
     
     init() {
-        self.session = [SleepSnapShot(time: Date(), heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM),
-                        SleepSnapShot(time: Date() + 1*60, heartRate: 0, o2Sat: 0, sleepStage: SleepStageType.REM)]
+        self.session = []
     }
     
     init(session: [SleepSnapShot]) {
