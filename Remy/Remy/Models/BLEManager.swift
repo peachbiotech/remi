@@ -31,14 +31,16 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var peripherals = [Peripheral]()
     @Published var connectedPeripheral: CBPeripheral?
 
-    @Published var eegQuality: EEGQuality = EEGQuality.NOSIGNAL
+    @Published var eegQuality: EEGQuality = EEGQuality.GOOD
     @Published var heartRate = 0
     @Published var o2Level = 0
     @Published var batteryPercentage: Int = 0
     @Published var accelerometerData: (x: Float, y: Float, z: Float) = (0, 0, 0)
     @Published var gyroscopeData: (x: Float, y: Float, z: Float) = (0, 0, 0)
+    @Published var eeg: Float = 0.0
+    private let eegSamplingRate = 60.0
     
-    @Published var hasEEG: Bool = true // Set to true for debug purposes
+    @Published var hasEEG: Bool = false
     @Published var hasHeart: Bool = false
     @Published var hasO2: Bool = false
     @Published var hasBattery: Bool = true
@@ -55,12 +57,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     
     private var snapShots: [SleepSnapShot] = []
     private var imuDataBuffer: [IMUData] = []
+    private var eegDataBuffer: [Float] = []
     
     // Service UUIDs
     private let heartRateO2ServiceUUID = CBUUID(string: "7ab13626-ddc3-4fa0-b724-06460cc40223")
     private let heartRateO2ReadRateServiceUUID = CBUUID(string: "71b55e6a-a938-432c-9304-b119b4f626d2")
     private let batteryServiceUUID = CBUUID(string: "d650e494-beac-45e5-ab00-d27ae4f9c603")
-    //private let eegServiceUUID = CBUUID(string: "d650e494-beac-45e5-ab00-d27ae4f9c604")
+    private let eegServiceUUID = CBUUID(string: "60b07837-07fc-440f-8109-f2ab0eded10a")
     private let imuServiceUUID = CBUUID(string: "3b7a1639-8d9a-49e7-8077-67f398d95c2b")
 
     // Characteristic UUIDs
@@ -72,11 +75,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     // BATTERY_SERVICE
     private let batteryLevelCharacteristicUUID = CBUUID(string: "64cb58e5-c7c6-4976-bfb2-8b0cb7527c22")
     private let batteryVoltageCharacteristicUUID = CBUUID(string: "8a1c6667-e658-4c43-9894-f6b119abb755")
-    // EEG_SERVICE
     // IMU_SERVICE
     private let accelerometerCharacteristicUUID = CBUUID(string: "c89c6c9f-ef3e-4e78-84c6-8834566269b8")
     private let gyroscopeCharacteristicUUID = CBUUID(string: "4f6aaa29-8919-44bd-b21d-2950bb9e6922")
     private let temperatureCharacteristicUUID = CBUUID(string: "9d175382-ac47-4be4-8c60-24ec6024fc8d")
+    // EEG_SERVICE
+    private let eegMeasurementCharacteristicUUID = CBUUID(string: "b9fd519b-d2fb-401a-8fb8-d510b198c505")
     
     private let serviceUUIDS: [CBUUID]
     
@@ -88,6 +92,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     private var accelerometerCharacteristic: CBCharacteristic?
     private var gyroscopeCharacteristic: CBCharacteristic?
     private var temperatureCharacteristic: CBCharacteristic?
+    private var eegMeasurementCharacteristic: CBCharacteristic?
     
     private let outOfRangeHeuristics: Set<CBError.Code> = [.unknown,
         .connectionTimeout, .peripheralDisconnected, .connectionFailed]
@@ -124,12 +129,13 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         }
     }
     
-    func write(snapShots: [SleepSnapShot], imuData: [IMUData], imuKey: String) async {
+    func write(snapShots: [SleepSnapShot], imuData: [IMUData], eegData: [Float], imuKey: String, eegKey: String) async {
         print("received data")
         do {
             let encoder = JSONEncoder()
             let encodedSnapShot = try encoder.encode(snapShots)
             let encodedIMUData = try encoder.encode(imuData)
+            let encodedEEGData = try encoder.encode(eegData)
             let dateKey = Helpers.fetchDateStringFromDate(date: snapShots[snapShots.count-1].time)
             if UserDefaults.standard.object(forKey: dateKey) != nil {
                 UserDefaults.standard.removeObject(forKey: dateKey)
@@ -137,6 +143,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         
             UserDefaults.standard.set(encodedSnapShot, forKey: dateKey)
             UserDefaults.standard.set(encodedIMUData, forKey: imuKey)
+            UserDefaults.standard.set(encodedEEGData, forKey: eegKey)
             print("wrote new sleepsnapshots for date: " + dateKey)
         }
         catch {
@@ -148,7 +155,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     private let peripheralIdDefaultsKey = "RemyPeripheral"
     
     override init() {
-        serviceUUIDS = [heartRateO2ServiceUUID, batteryServiceUUID, imuServiceUUID]
+        serviceUUIDS = [heartRateO2ServiceUUID, batteryServiceUUID, imuServiceUUID, eegServiceUUID, heartRateO2ReadRateServiceUUID]
         super.init()
         let options = [CBCentralManagerOptionRestoreIdentifierKey: restoreIdKey]
         central = CBCentralManager(delegate: self, queue: nil, options: options)
@@ -214,7 +221,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         self.heartRate = 0
         self.batteryPercentage = 0
         self.eegQuality = .GOOD
-        self.hasEEG = true
+
+        self.heartRate = 0
+        self.o2Level = 0
+        self.batteryPercentage = 0
+        self.accelerometerData = (0, 0, 0)
+        self.gyroscopeData = (0, 0, 0)
+        self.eeg = 0.0
+        self.imuDataBuffer = []
+        self.eegDataBuffer = []
+        
+        self.hasEEG = false
         self.hasHeart = false
         self.hasO2 = false
         self.hasBattery = false
@@ -239,8 +256,11 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     }
     
     func discoverServices(peripheral: CBPeripheral) {
-        peripheral.discoverServices(serviceUUIDS)
-        state = .discoveringServices(peripheral, Countdown(seconds: 10, closure: {}))
+        let seconds = 2.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            peripheral.discoverServices(self.serviceUUIDS)
+            self.state = .discoveringServices(peripheral, Countdown(seconds: 25, closure: {}))
+        }
     }
     
     func discoverCharacteristics(peripheral: CBPeripheral) {
@@ -248,12 +268,17 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             self.disconnect()
             return
         }
-        state = .discoveringCharacteristics(peripheral, Countdown(seconds: 10, closure: {}))
+        state = .discoveringCharacteristics(peripheral, Countdown(seconds: 25, closure: {}))
         for service in services {
+            print(service.uuid)
             if service.uuid == heartRateO2ServiceUUID {
                 print("found heart rate o2 service")
                 peripheral.discoverCharacteristics([heartRateMeasurementCharacteristicUUID,
                                                     o2MeasurementCharacteristicUUID], for: service)
+            }
+            if service.uuid == eegServiceUUID {
+                print("found eeg service")
+                peripheral.discoverCharacteristics([eegMeasurementCharacteristicUUID], for: service)
             }
             if service.uuid == batteryServiceUUID {
                 print("found battery service")
@@ -263,6 +288,10 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             if service.uuid == imuServiceUUID {
                 print("found imu service")
                 peripheral.discoverCharacteristics([accelerometerCharacteristicUUID, gyroscopeCharacteristicUUID], for: service)
+            }
+            if service.uuid == heartRateO2ReadRateServiceUUID {
+                print("found hr o2 read rate service")
+                peripheral.discoverCharacteristics([heartRateO2ReadRateCharacteristicUUID], for: service)
             }
         }
     }
@@ -502,7 +531,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             let y = Float(dataArray[1]) ?? 0
             let z = Float(dataArray[2]) ?? 0
             self.accelerometerData = (x, y, z)
-            self.hasImu = true // TODO: Check imu ready
+            self.hasImu = true // TODO: imu calibration?
         }
     }
 
@@ -516,11 +545,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
             self.gyroscopeData = (x, y, z)
         }
     }
+    
+    func handleEEGRead(data: String) {
+        self.eeg = Float(data) ?? 0.0;
+        hasEEG = true
+    }
 
     func updateDeviceReady() {
-        if !self.hasBattery {
-            readBatteryVoltage(peripheral: self.connectedPeripheral!)
-        }
+        //readBatteryVoltage(peripheral: self.connectedPeripheral!)
         self.isReady = self.hasEEG && self.hasHeart && self.hasO2// TODO: calibrate battery && self.hasBattery
         print(self.state)
     }
@@ -534,6 +566,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     func setReadRate(rate: String) {
 
         let data: Data? = rate.data(using: .utf8)
+        print("setting read rate:" + rate)
         
         if (heartRateO2ReadRateCharacteristic != nil) && (self.connectedPeripheral != nil) {
             self.connectedPeripheral!.writeValue(data!, for: heartRateO2ReadRateCharacteristic!, type: .withoutResponse)
@@ -598,6 +631,16 @@ extension BLEManager: CBPeripheralDelegate {
                 gyroscopeCharacteristic = characteristic
                 peripheral.setNotifyValue(true, for: characteristic)
             }
+            else if characteristic.uuid == eegMeasurementCharacteristicUUID {
+                print("found eeg characteristic")
+                eegMeasurementCharacteristic = characteristic
+                peripheral.setNotifyValue(true, for: characteristic)
+
+            }
+            else if characteristic.uuid == heartRateO2ReadRateCharacteristicUUID {
+                print("found hr o2 read rate characteristic")
+                heartRateO2ReadRateCharacteristic = characteristic
+            }
         }
         
         setConnected(peripheral: peripheral)
@@ -632,7 +675,7 @@ extension BLEManager: CBPeripheralDelegate {
             return
         }
         else if characteristic.uuid == batteryVoltageCharacteristicUUID {
-            print("received battery voltage")
+            print("reading battery voltage")
             
             guard let batteryVoltage = characteristic.value else {
                 return
@@ -659,18 +702,43 @@ extension BLEManager: CBPeripheralDelegate {
                 handleGyroscopeData(data: dataString)
             }
         }
+        else if characteristic.uuid == eegMeasurementCharacteristicUUID {
+            guard let eeg = characteristic.value else {
+                return
+            }
+            if let dataString = NSString.init(data: eeg, encoding: String.Encoding.utf8.rawValue) as String? {
+                handleEEGRead(data: dataString)
+            }
+        }
         if hasImu {
+            print("imu data count: \(imuDataBuffer.count)")
             imuDataBuffer.append(IMUData(accelx: self.accelerometerData.x, accely: self.accelerometerData.y, accelz: self.accelerometerData.z, gyrox: self.gyroscopeData.x, gyroy: self.accelerometerData.y, gyroz: self.gyroscopeData.z))
             hasImu = false
+            
+            if imuDataBuffer.count == 101 {
+                imuDataBuffer.remove(at: 0)
+            }
+        }
+        if hasEEG {
+            eegDataBuffer.append(self.eeg)
+            hasEEG = false
+            
+            if eegDataBuffer.count == 10000 {
+                eegDataBuffer.remove(at: 0)
+            }
         }
         
         if newO2Data && newHeartRateData && imuDataBuffer.count == 100{
             let imuKey = UUID().uuidString
-            snapShots.append(SleepSnapShot(time: Date(), heartRate: heartRate, o2Sat: o2Level, sleepStage: SleepStageType.NREM1, imuKey: imuKey))
+            let eegKey = UUID().uuidString
+            snapShots.append(SleepSnapShot(time: Date(), heartRate: heartRate, o2Sat: o2Level, sleepStage: SleepStageType.NREM1, imuKey: imuKey, eegKey: eegKey))
             newO2Data = false
             newHeartRateData = false
+            imuDataBuffer = []
+            eegDataBuffer = []
+            
             Task {
-                await write(snapShots: snapShots, imuData: imuDataBuffer, imuKey: imuKey)
+                await write(snapShots: snapShots, imuData: imuDataBuffer, eegData: eegDataBuffer, imuKey: imuKey, eegKey: eegKey)
             }
         }
     }

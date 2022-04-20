@@ -64,7 +64,7 @@ struct SleepSession: Codable {
         }
     }
     
-    private static func timeDifferenceSecs(startTime: Date, endTime: Date) -> Int { // TODO: This is in milisecs not secs
+    private static func timeDifferenceSecs(startTime: Date, endTime: Date) -> Int { // TODO: Figure out units?
         let startInSecs = startTime.timeIntervalSince1970
         let endInSecs = endTime.timeIntervalSince1970
         print("start: \(startInSecs)")

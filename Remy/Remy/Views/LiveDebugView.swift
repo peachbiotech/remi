@@ -18,6 +18,7 @@ struct LiveDebugView: View {
             Text("Oxygen: \(bleManager.o2Level)")
             Text("Accelerometer: \(bleManager.accelerometerData.x), \(bleManager.accelerometerData.y),\(bleManager.accelerometerData.z)")
             Text("Gyroscope: \(bleManager.gyroscopeData.x),\(bleManager.gyroscopeData.y),\(bleManager.gyroscopeData.z)")
+            Text("EEG: \(bleManager.eeg)")
         }
     }
 }
